@@ -1,0 +1,2141 @@
+/* ========================================
+   建築者 ~Builder~ 専門診断テスト
+   統合デザインシステム v2.0
+
+   2025.12.24 最終更新 by Nobu
+   - 未来シミュレーション白書デザイン完全統合
+   - レスポンシブ対応完全版
+======================================== */
+
+:root {
+
+/* Moonlight Color Palette - Black/White/Gray Base */
+
+--primary-color: #E8E8E8;
+--secondary-color: #A0A0A0;
+--accent-color: #2A2A2A;
+--text-dark: #F5F5F5;
+--text-light: #0D0D0D;
+--background: #0D0D0D;
+--card-background: #1A1A1A;
+--shadow: rgba(255, 255, 255, 0.05);
+--shadow-hover: rgba(255, 255, 255, 0.1);
+--border-radius: 12px;
+--transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+            /* Custom moonlight palette */
+            --color-background: #0D0D0D;
+            --color-surface: #151515;
+            --color-text: #f5f5f5; /* #EAEAEA */
+            --color-text-w: #0a0a0a;
+            --color-text-secondary: rgba(234, 234, 234, 0.7);
+            --color-text-secondary-w: rgba(21, 21, 21, 0.7);
+            --color-primary: #EAEAEA;
+            --color-primary-w: #151515;
+            --color-accent-glow: #FFFFFF;
+            --color-border: rgba(234, 234, 234, 0.2);
+            --color-border-w: rgba(21, 21, 21, 0.2);
+            --color-focus-ring: rgba(255, 255, 255, 0.4);
+            
+            /* Typography */
+            --font-family-primary: 'SF Pro Display', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-family-secondary: 'Inter', 'Noto Sans JP', sans-serif;
+            --font-size-xs: 11px;
+            --font-size-sm: 12px;
+            --font-size-base: 17px;
+            --font-size-lg: 22px;
+            --font-size-xl: 32px;
+            --font-size-2xl: 40px;
+            --font-size-3xl: 48px;
+            --font-size-4xl: 64px;
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+            --line-height-tight: 1.2;
+            --line-height-normal: 1.5;
+            --line-height-loose: 170%;
+            --letter-spacing-tight: -0.01em;
+            --letter-spacing-normal: 0;
+            --letter-spacing-wide: 0.05em;
+            --letter-spacing-wider: 0.1em;
+            
+            /* Spacing */
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 24px;
+            --space-lg: 32px;
+            --space-xl: 48px;
+            --space-2xl: 64px;
+            --space-3xl: 80px;
+            --space-4xl: 100px;
+            --space-5xl: 120px;
+            --space-6xl: 160px;
+            
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-base: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            
+            /* Shadows and Glows */
+            --glow-soft: 0 0 20px rgba(255, 255, 255, 0.1);
+            --glow-medium: 0 0 30px rgba(255, 255, 255, 0.2);
+            --glow-strong: 0 0 40px rgba(255, 255, 255, 0.3);
+            
+            /* Animation */
+            --duration-fast: 150ms;
+            --duration-normal: 300ms;
+            --duration-slow: 600ms;
+            --ease-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
+        
+
+}
+
+/* ========================================
+   診断ページ専用 - 非表示処理
+======================================== */
+/* 質問ページとメール入力ページは初期非表示 */
+#question-page,
+#email-page {
+    display: none;
+}
+
+/* アクティブ状態で表示切替 */
+#start-page.active,
+#question-page.active,
+#email-page.active {
+    display: block;
+}
+
+/* Page Transitions */
+
+.page {
+display: none;
+opacity: 0;
+transform: translateY(20px);
+transition: var(--transition);
+min-height: 100vh;
+
+}
+
+.page.active {
+display: block;
+opacity: 1;
+transform: translateY(0);
+animation: fadeInUp 0.5s ease-out;
+
+}
+
+
+/* Loading Overlay */
+.loading-overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(13, 13, 13, 0.95);
+display: none;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+z-index: 1000;
+
+}
+
+.loading-overlay.active {
+display: flex;
+
+}
+
+.spinner {
+width: 50px;
+height: 50px;
+border: 4px solid var(--accent-color);
+border-top-color: var(--primary-color);
+border-radius: 50%;
+animation: spin 1s linear infinite;
+margin-bottom: 16px;
+
+}
+
+@keyframes spin {
+to { transform: rotate(360deg); }
+
+}
+
+.loading-overlay p {
+font-size: 1.1rem;
+color: var(--primary-color);
+font-weight: 600;
+
+}
+
+
+/* ========================================
+   診断ページ専用 - 選択肢、ボタンなど
+======================================== */
+/* Progress Bar */
+
+.progress-bar {
+width: 100%;
+height: 8px;
+background-color: var(--accent-color);
+border-radius: 4px;
+overflow: hidden;
+margin-bottom: 16px;
+
+}
+
+.progress-fill {
+height: 100%;
+background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+width: 0;
+transition: width 0.3s ease;
+
+}
+
+.progress-text {
+font-size: 0.9rem;
+color: var(--secondary-color);
+margin-bottom: 32px;
+font-weight: 600;
+
+}
+
+/* Question Container */
+
+.question-container {
+margin-bottom: 40px;
+
+}
+
+.question-text {
+font-size: 1.5rem;
+font-weight: 600;
+color: var(--text-dark);
+margin-bottom: 32px;
+line-height: 1.6;
+text-align: center;
+
+}
+
+/* Choices */
+.choices {
+display: flex;
+flex-direction: column;
+gap: 16px;
+
+}
+
+.choice-btn {
+background-color: var(--card-background);
+border: 2px solid var(--accent-color);
+border-radius: var(--border-radius);
+padding: 20px 24px;
+font-size: 1.1rem;
+color: var(--text-dark);
+cursor: pointer;
+transition: var(--transition);
+text-align: left;
+min-height: 70px;
+display: flex;
+align-items: center;
+box-shadow: 0 2px 8px var(--shadow);
+position: relative;
+overflow: hidden;
+
+}
+
+.choice-btn::before {
+content: '';
+position: absolute;
+left: 0;
+top: 0;
+width: 4px;
+height: 100%;
+background: var(--primary-color);
+transform: scaleY(0);
+transition: transform 0.3s ease;
+
+}
+
+.choice-btn:hover {
+border-color: var(--primary-color);
+box-shadow: 0 4px 16px var(--shadow-hover);
+transform: translateX(4px);
+
+}
+
+.choice-btn:hover::before {
+transform: scaleY(1);
+
+}
+
+.choice-btn:active {
+transform: translateX(2px) scale(0.98);
+
+}
+
+.choice-btn.selected {
+background-color: var(--accent-color);
+border-color: var(--primary-color);
+font-weight: 600;
+
+}
+
+/* Buttons */
+
+.cta-section{
+    padding-top: 70px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.btn {
+  padding: 16px 40px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  min-width: 200px;
+  min-height: 56px;
+  display: inline-block;
+  text-align: center;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+/* CTAボタン強調版 */
+.btn-primary {
+  background-color: #FFFFFF;              /* 純白背景で最大コントラスト */
+  color: #0D0D0D;                         /* 黒文字ではっきり読める */
+  font-weight: 700;                       /* 太字で存在感UP */
+  border-radius: 999px;                   /* カプセル型で「押せる」感を強調 */
+  box-shadow: 
+    0 0 0 2px rgba(255, 255, 255, 0.3),   /* 薄い外枠でボタンを浮かせる */
+    0 8px 24px rgba(0, 0, 0, 0.7);        /* 深いシャドウで立体感 */
+}
+
+.btn-primary:hover {
+  background-color: #F0F0F0;              /* ホバー時に僅かに暗く */
+  box-shadow: 
+    0 0 0 2px rgba(255, 255, 255, 0.4),
+    0 10px 28px rgba(0, 0, 0, 0.8);       /* シャドウを強くして浮き上がる */
+  transform: translateY(-2px);            /* 上に浮く動き */
+}
+
+.btn-primary:active {
+  transform: translateY(0);                /* 押した瞬間に沈む */
+  box-shadow: 
+    0 0 0 2px rgba(255, 255, 255, 0.25),
+    0 4px 16px rgba(0, 0, 0, 0.65);
+}
+
+
+/* CTAボタン強調版 */
+.btn-primary2 {
+  background-color: #000000;              /* 純白背景で最大コントラスト */
+  color: #D0D0D0;                         /* 黒文字ではっきり読める */
+  font-weight: 700;                       /* 太字で存在感UP */
+  border-radius: 999px;                   /* カプセル型で「押せる」感を強調 */
+  box-shadow: 
+    0 0 0 2px rgba(255, 255, 255, 0.3),   /* 薄い外枠でボタンを浮かせる */
+    0 8px 24px rgba(0, 0, 0, 0.7);        /* 深いシャドウで立体感 */
+}
+
+.btn-primary2:hover {
+  background-color: #0F0F0F;              /* ホバー時に僅かに暗く */
+  box-shadow: 
+    0 0 0 2px rgba(255, 255, 255, 0.4),
+    0 10px 28px rgba(0, 0, 0, 0.8);       /* シャドウを強くして浮き上がる */
+  transform: translateY(-2px);            /* 上に浮く動き */
+}
+
+.btn-primary2:active {
+  transform: translateY(0);                /* 押した瞬間に沈む */
+  box-shadow: 
+    0 0 0 2px rgba(255, 255, 255, 0.25),
+    0 4px 16px rgba(0, 0, 0, 0.65);
+}
+
+
+
+.btn-secondary {
+background-color: transparent;
+color: var(--primary-color);
+border: 2px solid var(--primary-color);
+margin-left: 12px;
+
+}
+
+.btn-secondary:hover {
+background-color: var(--accent-color);
+
+}
+
+/* Action Area */
+
+.action-area {
+margin-top: 40px;
+margin:0 auto;
+text-align: center;
+
+}
+
+/* Form */
+
+.email-form {
+max-width: 500px;
+margin: 0 auto;
+
+}
+
+.form-group {
+margin-bottom: 24px;
+
+}
+
+.form-label {
+display: block;
+font-size: 0.95rem;
+font-weight: 600;
+color: var(--text-dark);
+margin-bottom: 8px;
+text-align: left;
+
+}
+
+.form-control {
+width: 100%;
+padding: 16px;
+font-size: 1rem;
+border: 2px solid var(--accent-color);
+border-radius: var(--border-radius);
+background-color: var(--card-background);
+color: var(--text-dark);
+transition: var(--transition);
+min-height: 56px;
+
+}
+
+.form-control:focus {
+outline: none;
+border-color: var(--primary-color);
+box-shadow: 0 0 0 3px rgba(232, 232, 232, 0.1);
+
+}
+
+
+/* ========================================
+   リセット & ベース設定
+======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-padding-top: 20px;
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: clamp(15px, 4vw, 18px);
+    font-weight: 400;
+    line-height: 2.0;
+    color: #e6e6e6;
+    background: #0f0f0f;
+    letter-spacing: 0.03em;
+}
+
+/* ========================================
+   Sacred Quote（神聖な引用）
+   中央配置の大きな引用テキスト
+======================================== */
+.sacred-quote {
+    font-family: 'SF Pro Display', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: clamp(1.4rem, 4.5vw, 2.1rem);
+    font-weight: 500;
+    line-height: 2.2;
+    letter-spacing: 0.1em;
+    text-align: center;
+    margin: 100px auto 140px auto;
+    padding: 80px 30px;
+    max-width: 800px;
+
+    /* 背景・枠線 */
+    background: linear-gradient(180deg, rgba(234, 234, 234, 0.03), rgba(234, 234, 234, 0.06));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+
+    /* 光のエフェクト */
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+
+    /* アニメーション */
+    transition: all 1.4s ease;
+}
+
+.sacred-quote.bh {
+    font-size: clamp(0.7rem, 3.7vw, 1.9rem);
+}
+
+.sacred-quote.bh2 {
+    font-size: clamp(1.2rem, 3.7vw, 1.9rem);
+}
+
+.sacred-quote:hover {
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+    transform: scale(1.01);
+}
+
+.sacred-quote.light-mode {
+    color: #1a1a1a;
+    background: linear-gradient(180deg, rgba(21, 21, 21, 0.03), rgba(21, 21, 21, 0.06));
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* スマホ対応 */
+/*@media (max-width: 768px) {
+    .sacred-quote {
+        font-size: clamp(1.1rem, 4vw, 1.6rem);
+        padding: 60px 20px;
+        margin: 60px auto 80px auto;
+        letter-spacing: 0.06em;
+    }
+}
+
+@media (max-width: 480px) {
+    .sacred-quote {
+        padding: 40px 16px;
+        margin: 40px auto 60px auto;
+    }
+}
+*/
+
+/* ========================================
+   共通セクション設定
+======================================== */
+section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 120px 20px;
+    position: relative;
+}
+
+section[id] {
+    scroll-margin-top: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ========================================
+   セクション背景色バリエーション
+======================================== */
+
+/* ダーク系 */
+.sec-hero {
+    background: #0a0a0a;
+    text-align: center;
+    justify-content: flex-end;
+    padding-bottom: 45vh;
+}
+
+.sec-dark-1 {
+    background: #0f0f0f;
+    align-items: flex-start;
+}
+
+.sec-dark-2 {
+    background: #1a1a1a;
+    align-items: flex-start;
+}
+
+.sec-dark-3 {
+    background: #141414;
+    align-items: flex-start;
+}
+
+.sec-final {
+    background: #0a0a0a;
+    text-align: left;
+    min-height: 100vh;
+}
+
+/* ライト系 */
+.sec-light-1 {
+    background: #f4f4f4;
+    align-items: flex-start;
+}
+
+.sec-light-2 {
+    background: #e6e6e6;
+    align-items: flex-start;
+}
+
+.sec-light-3 {
+    background: #ececec;
+    align-items: flex-start;
+}
+
+/* 特別なセクション用のアクセント背景 */
+.sec-accent-dark {
+    background: linear-gradient(180deg, #0a0a0a 0%, #141414 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sec-accent-light {
+    background: linear-gradient(180deg, #f4f4f4 0%, #e6e6e6 100%);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* ========================================
+   ヒーローセクション
+======================================== */
+.hero-headline {
+    font-size: clamp(40px, 8vw, 60px);
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+    color: #e6e6e6;
+    margin-bottom: 30px;
+}
+
+.hero-headline p {
+    margin-bottom: 20px;
+}
+
+.hero-subheadline {
+    font-size: clamp(18px, 4vw, 26px);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #c4c4c4;
+}
+
+/* ========================================
+   左寄せコンテンツ（最大幅600px）
+======================================== */
+.content-left {
+    max-width: 600px;
+    text-align: left;
+    margin: 0 auto;
+}
+
+.content-left p {
+    margin-bottom: 30px;
+}
+
+.content-left p:last-child {
+    margin-bottom: 0;
+}
+
+/* セクション別の余白調整 */
+.content-left p.spacing-large {
+    margin-bottom: 60px;
+}
+
+.content-left p.spacing-xlarge {
+    margin-bottom: 100px;
+}
+
+.content-left .list-group {
+    margin: 60px 0;
+}
+
+/* ========================================
+   ライトセクションのテキスト色
+======================================== */
+.sec-light-1 .content-left p,
+.sec-light-1 .content-left h3,
+.sec-light-1 .content-left h4,
+.sec-light-1 .content-left .sub-heading,
+.sec-light-1 .content-left .bullet-list li,
+.sec-light-1 .content-left .numbered-list li {
+    color: #1a1a1a;
+}
+
+.sec-light-1 .emphasis {
+    color: #2d2d2d;
+}
+
+.sec-light-1 .emphasis2 {
+    color: #2d2d2d;
+}
+
+.sec-light-2 .content-left p,
+.sec-light-2 .content-left h3,
+.sec-light-2 .content-left h4,
+.sec-light-2 .content-left .sub-heading,
+.sec-light-2 .content-left .bullet-list li,
+.sec-light-2 .content-left .numbered-list li {
+    color: #1a1a1a;
+}
+
+.sec-light-2 .emphasis {
+    color: #2d2d2d;
+}
+
+.sec-light-2 .emphasis2 {
+    color: #2d2d2d;
+}
+
+.sec-light-3 .content-left p,
+.sec-light-3 .content-left h3,
+.sec-light-3 .content-left h4,
+.sec-light-3 .content-left .sub-heading,
+.sec-light-3 .content-left .bullet-list li,
+.sec-light-3 .content-left .numbered-list li {
+    color: #1a1a1a;
+}
+
+.sec-light-3 .emphasis {
+    color: #2d2d2d;
+}
+
+.sec-light-3 .emphasis2 {
+    color: #2d2d2d;
+}
+
+/* ========================================
+   テキスト強調スタイル
+======================================== */
+.first {
+    font-weight: 500;
+    font-size: clamp(16px, 5.5vw, 26px);
+}
+
+.first-emphasis {
+    font-weight: 500;
+    font-size: 200%;
+    margin-bottom: 80px;
+    line-height: 2.2;
+}
+
+.emphasis {
+    color: #c4c4c4;
+    font-weight: 500;
+    font-size: clamp(16px, 5.5vw, 26px);
+    margin-bottom: 80px;
+    line-height: 2.2;
+}
+
+.emphasis2 {
+    color: #c4c4c4;
+    font-weight: 500;
+    font-size: clamp(15px, 4.5vw, 22px);
+    margin-bottom: 70px;
+    line-height: 2.0;
+}
+
+.center {
+    text-align: center;
+}
+
+.oblique {
+    font-style: oblique;
+}
+
+.strong {
+    font-weight: bold;
+}
+
+.black {
+    color: #0a0a0a !important;
+}
+
+.silver {
+    color: #3a3a3a;
+}
+
+.blue {
+    color: #2b3e50;
+    background-color: #fff;
+    padding: 10px;
+}
+
+.underline {
+    text-decoration: underline;
+    text-decoration-color: #2d4356;
+}
+
+/* ========================================
+   見出しスタイル
+======================================== */
+.content-left h3 {
+    font-size: clamp(22px, 5vw, 30px);
+    font-weight: 600;
+    color: #c9c9c9;
+    margin-bottom: 80px;
+    margin-top: 0;
+    line-height: 1.8;
+}
+
+.content-left h4 {
+    font-size: clamp(18px, 4.5vw, 24px);
+    font-weight: 500;
+    color: #c9c9c9;
+    margin-bottom: 50px;
+    margin-top: 0;
+    line-height: 1.8;
+}
+
+.sec-light-1 .content-left h3,
+.sec-light-2 .content-left h3,
+.sec-light-3 .content-left h3 {
+    color: #1a1a1a;
+}
+
+.sec-light-1 .content-left h4,
+.sec-light-2 .content-left h4,
+.sec-light-3 .content-left h4 {
+    color: #2d2d2d;
+}
+
+.sub-heading {
+    font-size: clamp(16px, 4vw, 20px);
+    font-weight: 600;
+    color: #c9c9c9;
+    margin-bottom: 30px;
+    margin-top: 50px;
+    display: block;
+}
+
+.sec-light-1 .sub-heading,
+.sec-light-2 .sub-heading,
+.sec-light-3 .sub-heading {
+    color: #2d2d2d;
+}
+
+/* リストグループのヘッダー */
+.list-group-header {
+    font-size: clamp(16px, 4vw, 19px);
+    font-weight: 600;
+    color: #c9c9c9;
+    margin-bottom: 20px;
+    margin-top: 60px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sec-light-1 .list-group-header,
+.sec-light-2 .list-group-header,
+.sec-light-3 .list-group-header {
+    color: #2d2d2d;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Yearヘッダーの強化 */
+.year-header {
+    font-size: clamp(24px, 5.5vw, 36px);
+    font-weight: 700;
+    margin-bottom: 60px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.sec-light-1 .year-header,
+.sec-light-2 .year-header,
+.sec-light-3 .year-header {
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+/* ========================================
+   リストスタイル
+======================================== */
+.bullet-list {
+    list-style: none;
+    margin: 50px 0;
+    padding-left: 0;
+}
+
+.bullet-list li {
+    margin-bottom: 15px;
+    padding-left: 30px;
+    position: relative;
+    color: #e6e6e6;
+}
+
+.bullet-list li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    font-weight: 600;
+}
+
+.bullet-list li.none {
+    margin-bottom: 15px;
+    padding-left: 0px;
+    position: relative;
+    color: #e6e6e6;
+}
+
+.bullet-list li.none:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    font-weight: 600;
+}
+
+.bullet-list li:last-child {
+    margin-bottom: 0;
+}
+
+.numbered-list {
+    list-style: none;
+    margin: 50px 0;
+    padding-left: 0;
+    counter-reset: item;
+}
+
+.numbered-list li {
+    margin-bottom: 15px;
+    padding-left: 40px;
+    position: relative;
+    color: #e6e6e6;
+}
+
+.numbered-list li:before {
+    content: counter(item) ".";
+    counter-increment: item;
+    position: absolute;
+    left: 0;
+    font-weight: 600;
+}
+
+.numbered-list li:last-child {
+    margin-bottom: 0;
+}
+
+/* ライトセクションのリスト色 */
+.sec-light-1 .bullet-list li,
+.sec-light-2 .bullet-list li,
+.sec-light-3 .bullet-list li,
+.sec-light-1 .numbered-list li,
+.sec-light-2 .numbered-list li,
+.sec-light-3 .numbered-list li {
+    color: #1a1a1a;
+}
+
+/* 特殊調整：段落内のリスト前後の余白削減 */
+.content-left p + .bullet-list,
+.content-left p + .numbered-list {
+    margin-top: 30px;
+}
+
+.bullet-list + p,
+.numbered-list + p {
+    margin-top: 50px;
+}
+
+/* ========================================
+   警告的な強調
+======================================== */
+.emphasis-warning {
+    color: #d0d0d0;
+    font-weight: 600;
+    font-size: clamp(17px, 4.9vw, 24px);
+    margin-bottom: 50px;
+    padding: 30px;
+    padding-right: 0px;
+    border-left: 3px solid #2b3e50;
+    border-radius: 8px;
+}
+
+/* ========================================
+   結論的な強調（ライト/ダーク両対応）
+======================================== */
+.emphasis-conclusion {
+    font-size: clamp(18px, 5vw, 28px);
+    font-weight: 600;
+    text-align: center;
+    margin: 80px auto;
+    padding: 40px 20px;
+    transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+
+/* ライトセクション用のスタイル */
+.sec-light-1 .emphasis-conclusion,
+.sec-light-2 .emphasis-conclusion,
+.sec-light-3 .emphasis-conclusion {
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    color: #1a1a1a;
+}
+
+/* ダークセクション用のスタイル */
+.sec-dark-1 .emphasis-conclusion,
+.sec-dark-2 .emphasis-conclusion,
+.sec-dark-3 .emphasis-conclusion,
+.sec-final .emphasis-conclusion {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e6e6e6;
+}
+
+/* オプション：マウスホバー時の効果 */
+.emphasis-conclusion:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.sec-light-1 .emphasis-conclusion:hover,
+.sec-light-2 .emphasis-conclusion:hover,
+.sec-light-3 .emphasis-conclusion:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+/* ========================================
+   反論カード
+======================================== */
+.refutation-card {
+    padding: 50px 40px;
+    margin: 60px 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.sec-light-1 .refutation-card,
+.sec-light-2 .refutation-card,
+.sec-light-3 .refutation-card {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.02);
+}
+
+/* ========================================
+   セクション間の視覚的区切り線
+======================================== */
+.section-divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #c9c9c9, transparent);
+    margin: 100px auto;
+}
+
+.section-divider.light {
+    background: linear-gradient(90deg, transparent, #2d2d2d, transparent);
+}
+
+/* ========================================
+   対比表現の装飾クラス
+======================================== */
+
+/* AI以前/AI以後の対比 */
+.comparison-wrapper {
+    margin: 80px 0;
+}
+
+.comparison-item {
+    padding: 40px 35px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.comparison-item:last-child {
+    margin-bottom: 0;
+}
+
+/* AI以前（過去）のスタイル */
+.comparison-before {
+    background: rgba(100, 100, 100, 0.15);
+    border-left: 4px solid #888;
+}
+
+.sec-light-1 .comparison-before,
+.sec-light-2 .comparison-before,
+.sec-light-3 .comparison-before {
+    background: rgba(150, 150, 150, 0.12);
+    border-left: 4px solid #666;
+}
+
+/* AI以後（現在/未来）のスタイル */
+.comparison-after {
+    background: rgba(230, 80, 80, 0.12);
+    border-left: 4px solid #2b3e50;
+}
+
+.sec-light-1 .comparison-after,
+.sec-light-2 .comparison-after,
+.sec-light-3 .comparison-after {
+    background: #f4f4f4;
+    border-left: 4px solid #2b3e50;
+}
+
+/* 対比ラベル */
+.comparison-label {
+    font-size: clamp(15px, 4vw, 19px);
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: 0.08em;
+    display: block;
+}
+
+.comparison-before .comparison-label {
+    color: #aaa;
+}
+
+.sec-light-1 .comparison-before .comparison-label,
+.sec-light-2 .comparison-before .comparison-label,
+.sec-light-3 .comparison-before .comparison-label {
+    color: #666;
+}
+
+.comparison-after .comparison-label {
+    color: #2b3e50;
+}
+
+.sec-light-1 .comparison-after .comparison-label,
+.sec-light-2 .comparison-after .comparison-label,
+.sec-light-3 .comparison-after .comparison-label {
+    color: #2b3e50;
+}
+
+/* ========================================
+   フレーム設定者/充填者の装飾
+======================================== */
+
+/* フレーム対比のラッパー */
+.frame-comparison-wrapper {
+    margin: 80px 0;
+}
+
+.frame-role {
+    padding: 45px 40px;
+    margin-bottom: 40px;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.frame-role:last-child {
+    margin-bottom: 0;
+}
+
+/* フレーム設定者（支配側）のスタイル */
+.frame-setter {
+    background: linear-gradient(135deg, rgba(80, 150, 220, 0.15) 0%, rgba(50, 120, 200, 0.1) 100%);
+    border: 2px solid rgba(80, 150, 220, 0.3);
+    border-left: 5px solid #2b3e50;
+}
+
+.sec-light-1 .frame-setter,
+.sec-light-2 .frame-setter,
+.sec-light-3 .frame-setter {
+    background: linear-gradient(135deg, rgba(60, 120, 180, 0.12) 0%, rgba(40, 100, 160, 0.08) 100%);
+    border: 2px solid rgba(60, 120, 180, 0.25);
+    border-left: 5px solid #2b3e50;
+}
+
+/* フレーム充填者（従属側）のスタイル */
+.frame-filler {
+    background: linear-gradient(135deg, rgba(150, 150, 150, 0.12) 0%, rgba(120, 120, 120, 0.08) 100%);
+    border: 2px solid rgba(150, 150, 150, 0.25);
+    border-left: 5px solid #888;
+    opacity: 0.85;
+}
+
+.sec-light-1 .frame-filler,
+.sec-light-2 .frame-filler,
+.sec-light-3 .frame-filler {
+    background: linear-gradient(135deg, rgba(120, 120, 120, 0.1) 0%, rgba(100, 100, 100, 0.06) 100%);
+    border: 2px solid rgba(120, 120, 120, 0.2);
+    border-left: 5px solid #666;
+}
+
+/* 役割ラベル */
+.frame-label {
+    font-size: clamp(17px, 4.5vw, 22px);
+    font-weight: 700;
+    margin-bottom: 25px;
+    letter-spacing: 0.06em;
+    display: block;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.frame-setter .frame-label {
+    color: #f4f4f4;
+}
+
+.sec-light-1 .frame-setter .frame-label,
+.sec-light-2 .frame-setter .frame-label,
+.sec-light-3 .frame-setter .frame-label {
+    color: #2b3e50;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.frame-filler .frame-label {
+    color: #e0e0e0;
+}
+
+.sec-light-1 .frame-filler .frame-label,
+.sec-light-2 .frame-filler .frame-label,
+.sec-light-3 .frame-filler .frame-label {
+    color: #555;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+/* 役割説明文 */
+.frame-description {
+    font-size: clamp(15px, 4vw, 18px);
+    line-height: 2.0;
+    margin-bottom: 0;
+}
+
+
+/* ========================================
+   メールフォームセクション
+   ダーク/ライト両対応の完全デザイン
+======================================== */
+
+/* フォームセクションのコンテナ */
+.email-form-section {
+    max-width: 600px;
+    margin: 80px auto 0 auto;
+    padding: 0 20px;
+}
+
+/* メールフォーム本体 */
+.email-form {
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* フォームグループ */
+.email-form .form-group {
+    margin-bottom: 30px;
+}
+
+/* ========================================
+   ダークセクション用スタイル（デフォルト）
+======================================== */
+
+/* ラベル - ダークモード */
+.email-form .form-group label {
+    display: block;
+    margin-bottom: 12px;
+    font-size: clamp(15px, 3.8vw, 17px);
+    color: var(--color-text);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+/* 入力フィールド - ダークモード */
+.email-form .form-input {
+    width: 100%;
+    padding: 18px 20px;
+    background: var(--card-background);
+    border: 2px solid var(--accent-color);
+    border-radius: var(--border-radius);
+    color: var(--text-dark);
+    font-size: clamp(15px, 4vw, 17px);
+    font-family: 'Noto Sans JP', sans-serif;
+    transition: var(--transition);
+    min-height: 56px;
+    line-height: 1.5;
+}
+
+.email-form .form-input::placeholder {
+    color: var(--secondary-color);
+    opacity: 0.7;
+}
+
+.email-form .form-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: rgba(26, 26, 26, 0.9);
+    box-shadow: 0 0 0 4px rgba(232, 232, 232, 0.1);
+}
+
+/* プライバシーノート - ダークモード */
+.email-form .privacy-note {
+    margin: 24px 0 32px 0;
+    font-size: clamp(7px, 2vw, 9px);
+    color: var(--secondary-color);
+    line-height: 1.8;
+    text-align: left;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 3px solid var(--accent-color);
+    border-radius: 4px;
+}
+
+/* 送信ボタン - ダークモード */
+.submit-btn {
+    width: 100%;
+    padding: 20px;
+    background: #FFFFFF;
+    color: #0D0D0D;
+    font-weight: 700;
+    border: none;
+    border-radius: 999px;
+    font-size: clamp(16px, 4vw, 18px);
+    cursor: pointer;
+    transition: var(--transition);
+    letter-spacing: 0.08em;
+    margin-top: 20px;
+    box-shadow: 
+        0 0 0 2px rgba(255, 255, 255, 0.3),
+        0 8px 24px rgba(0, 0, 0, 0.7);
+}
+
+.submit-btn:hover {
+    background: #F0F0F0;
+    transform: translateY(-2px);
+    box-shadow: 
+        0 0 0 2px rgba(255, 255, 255, 0.4),
+        0 10px 28px rgba(0, 0, 0, 0.8);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+    box-shadow: 
+        0 0 0 2px rgba(255, 255, 255, 0.25),
+        0 4px 16px rgba(0, 0, 0, 0.65);
+}
+
+.submit-btn:disabled {
+    background: var(--accent-color);
+    color: var(--secondary-color);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.5;
+}
+
+/* ========================================
+   ライトセクション用スタイル（上書き）
+======================================== */
+
+/* ライトセクションでのラベル */
+.sec-light-1 .email-form .form-group label,
+.sec-light-2 .email-form .form-group label,
+.sec-light-3 .email-form .form-group label {
+    color: var(--color-text-w);
+}
+
+/* ライトセクションでの入力フィールド */
+.sec-light-1 .email-form .form-input,
+.sec-light-2 .email-form .form-input,
+.sec-light-3 .email-form .form-input {
+    background: #FFFFFF;
+    border: 2px solid rgba(21, 21, 21, 0.15);
+    color: var(--color-text-w);
+}
+
+.sec-light-1 .email-form .form-input::placeholder,
+.sec-light-2 .email-form .form-input::placeholder,
+.sec-light-3 .email-form .form-input::placeholder {
+    color: rgba(21, 21, 21, 0.5);
+}
+
+.sec-light-1 .email-form .form-input:focus,
+.sec-light-2 .email-form .form-input:focus,
+.sec-light-3 .email-form .form-input:focus {
+    border-color: var(--color-primary-w);
+    background: #FAFAFA;
+    box-shadow: 0 0 0 4px rgba(21, 21, 21, 0.08);
+}
+
+/* ライトセクションでのプライバシーノート */
+.sec-light-1 .email-form .privacy-note,
+.sec-light-2 .email-form .privacy-note,
+.sec-light-3 .email-form .privacy-note {
+    color: var(--color-text-secondary-w);
+    background: rgba(0, 0, 0, 0.03);
+    border-left: 3px solid rgba(21, 21, 21, 0.2);
+}
+
+/* ライトセクションでの送信ボタン */
+.sec-light-1 .submit-btn,
+.sec-light-2 .submit-btn,
+.sec-light-3 .submit-btn {
+    background: #000000;
+    color: #F5F5F5;
+    box-shadow: 
+        0 0 0 2px rgba(0, 0, 0, 0.2),
+        0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.sec-light-1 .submit-btn:hover,
+.sec-light-2 .submit-btn:hover,
+.sec-light-3 .submit-btn:hover {
+    background: #1A1A1A;
+    box-shadow: 
+        0 0 0 2px rgba(0, 0, 0, 0.3),
+        0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+.sec-light-1 .submit-btn:active,
+.sec-light-2 .submit-btn:active,
+.sec-light-3 .submit-btn:active {
+    box-shadow: 
+        0 0 0 2px rgba(0, 0, 0, 0.2),
+        0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.sec-light-1 .submit-btn:disabled,
+.sec-light-2 .submit-btn:disabled,
+.sec-light-3 .submit-btn:disabled {
+    background: #E0E0E0;
+    color: #888888;
+}
+
+/* ========================================
+   必須マーク
+======================================== */
+.required {
+    color: #FF4444;
+    margin-left: 4px;
+    font-weight: 700;
+}
+
+/* ========================================
+   モバイル最適化
+======================================== */
+@media (max-width: 768px) {
+    .email-form-section {
+        max-width: 100%;
+        margin: 60px auto 0 auto;
+        padding: 0 20px;
+    }
+
+    .email-form .form-input {
+        padding: 16px 18px;
+        min-height: 52px;
+    }
+
+    .email-form .privacy-note {
+        padding: 14px;
+        margin: 20px 0 28px 0;
+    }
+
+    .email-form .submit-btn {
+        padding: 18px;
+        font-size: clamp(15px, 4vw, 17px);
+    }
+}
+
+@media (max-width: 480px) {
+    .email-form-section {
+        margin: 50px auto 0 auto;
+        padding: 0 16px;
+    }
+
+    .email-form .form-group {
+        margin-bottom: 24px;
+    }
+
+    .email-form .form-input {
+        padding: 14px 16px;
+        min-height: 48px;
+        font-size: clamp(14px, 4vw, 16px);
+    }
+
+    .email-form .submit-btn {
+        padding: 16px;
+        margin-top: 16px;
+    }
+}
+
+/* ========================================
+   フォーカス時のアクセシビリティ強化
+======================================== */
+.email-form .form-input:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+.sec-light-1 .email-form .form-input:focus-visible,
+.sec-light-2 .email-form .form-input:focus-visible,
+.sec-light-3 .email-form .form-input:focus-visible {
+    outline: 2px solid var(--color-primary-w);
+}
+
+/* ========================================
+   エラー状態（オプション）
+======================================== */
+.email-form .form-input.error {
+    border-color: #FF4444;
+}
+
+.email-form .form-input.error:focus {
+    box-shadow: 0 0 0 4px rgba(255, 68, 68, 0.15);
+}
+
+.error-message {
+    display: block;
+    margin-top: 8px;
+    font-size: clamp(12px, 3vw, 13px);
+    color: #FF4444;
+    font-weight: 500;
+}
+
+/* ========================================
+   成功状態のアニメーション（オプション）
+======================================== */
+.email-form.submitted {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.email-form-section {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+
+.bullet-list.bh li {
+    font-size: clamp(10px, 3.6vw, 24px);
+}
+
+
+.mirai-form {
+    margin-top: 60px;
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 30px;
+}
+
+/* ラベルスタイル */
+.light-mode-form .form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: clamp(14px, 3.5vw, 15px);
+    color: #333;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.required {
+    color: #c83232;
+    margin-left: 4px;
+}
+
+/* 入力フィールドスタイル（白背景用） */
+.light-mode-form .form-group input,
+.light-mode-form .form-group textarea {
+    width: 100%;
+    padding: 16px;
+    background: #fcfcfc;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    color: #1a1a1a;
+    font-size: 16px;
+    font-family: 'Noto Sans JP', sans-serif;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.light-mode-form .form-group input::placeholder,
+.light-mode-form .form-group textarea::placeholder {
+    color: #999;
+}
+
+.light-mode-form .form-group input:focus,
+.light-mode-form .form-group textarea:focus {
+    outline: none;
+    border-color: #555;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+}
+
+.light-mode-form .form-group textarea {
+    resize: vertical;
+    min-height: 150px;
+    line-height: 1.8;
+}
+
+/* 送信ボタン（白背景用） */
+.light-mode-form .submit-btn {
+    width: 100%;
+    padding: 20px;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    letter-spacing: 0.1em;
+    margin-top: 20px;
+}
+
+.light-mode-form .submit-btn:hover {
+    background: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.light-mode-form .submit-btn:disabled {
+    background: #999;
+    color: #e6e6e6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.light-mode-form .form-note {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #666;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* ローディングスピナー（白背景用） */
+.btn-loader {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top: 2px solid #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ========================================
+   送信完了メッセージ（白背景対応版）
+======================================== */
+#form-container {
+    transition: opacity 0.5s ease;
+}
+
+.success-message.light-mode-message {
+    text-align: center;
+    padding: 80px 30px;
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-top: 60px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.light-mode-message .success-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 30px;
+    color: #1a1a1a;
+}
+
+.light-mode-message h3 {
+    font-size: clamp(20px, 5vw, 24px);
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #1a1a1a;
+}
+
+.light-mode-message p {
+    font-size: clamp(15px, 4vw, 18px);
+    color: #444;
+    line-height: 2.2;
+    margin-bottom: 20px;
+}
+
+
+
+
+/* Stripe決済フォーム用スタイル */
+#payment-element {
+    margin-bottom: 24px;
+    padding: 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05); /* ダークモード用背景 */
+    border: 1px solid var(--accent-color);
+    min-height: 200px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* ライトモード時の調整 */
+.sec-light-1 #payment-element,
+.sec-light-2 #payment-element,
+.sec-light-3 #payment-element {
+    background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* エラーメッセージ */
+#payment-message {
+    color: #ff4444;
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+    text-align: center;
+    display: none; /* JSで表示制御 */
+}
+#payment-message:not(:empty) {
+    display: block;
+}
+
+/* ローディングスピナー */
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+
+
+
+/* ========================================
+   最終セクション
+======================================== */
+.final-content {
+    max-width: 800px;
+}
+
+.final-content h3 {
+    font-size: clamp(20px, 4.5vw, 26px);
+    font-weight: 500;
+    margin-bottom: 50px;
+    line-height: 2.0;
+}
+
+.final-content p {
+    font-size: clamp(16px, 4vw, 20px);
+    line-height: 2.2;
+    margin-bottom: 60px;
+}
+
+.signature {
+    font-size: clamp(13px, 3.5vw, 16px);
+    color: #888888;
+    margin-top: 80px;
+    text-align: right;
+}
+
+.signature p {
+    margin-bottom: 10px;
+    font-size: clamp(13px, 3.5vw, 16px);
+}
+
+/* ========================================
+   署名セクション
+======================================== */
+.signature-wrapper {
+    margin-top: 80px;
+    text-align: left;
+    max-width: 600px;
+}
+
+.signature-image {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    display: block;
+    margin-bottom: 30px;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+.signature-image:hover {
+    opacity: 1;
+}
+
+.signature-text {
+    font-size: clamp(13px, 3.5vw, 16px);
+    color: #888888;
+    text-align: left;
+    line-height: 1.8;
+}
+
+.signature-text p {
+    margin-bottom: 0;
+    font-size: clamp(13px, 3.5vw, 16px);
+}
+
+/* ========================================
+   フッター
+======================================== */
+.footer {
+    background: #000;
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+.footer-links {
+    display: inline;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
+
+.footer-copyright {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.05em;
+    margin-top: 20px;
+}
+
+
+
+/* ========================================
+   タイプミス提案ボックス
+======================================== */
+/* タイプミス提案ボックス */
+.suggestion-box {
+    min-height: 0;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+}
+
+/* 提案メッセージのデザイン */
+.suggestion-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--accent-color);
+    border-radius: 8px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* 修正案リンクのデザイン */
+.suggestion-link {
+    color: var(--primary-color);
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition: all 0.2s ease;
+}
+
+.suggestion-link:hover {
+    color: #fff;
+    text-decoration-color: rgba(255,255,255,0.5);
+}
+
+/* ライトモード対応 */
+.sec-light-1 .suggestion-message,
+.sec-light-2 .suggestion-message,
+.sec-light-3 .suggestion-message {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.sec-light-1 .suggestion-link,
+.sec-light-2 .suggestion-link,
+.sec-light-3 .suggestion-link {
+    color: #000;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ========================================
+   有機線エフェクト
+======================================== */
+#organic-line {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    pointer-events: none;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    opacity: 0.6;
+    filter: blur(1px);
+}
+
+/* ========================================
+   印刷スタイル
+======================================== */
+@media print {
+    section {
+        page-break-inside: avoid;
+        min-height: auto;
+        padding: 40px 20px;
+    }
+
+    .sacred-quote {
+        page-break-inside: avoid;
+    }
+
+    .footer {
+        page-break-before: always;
+    }
+}
+
+/* ========================================
+   モバイル最適化
+======================================== */
+
+/* スマホ専用改行 */
+.sp-only {
+    display: none;
+}
+
+.pc-only {
+    display: inline;
+}
+
+@media (max-width: 768px) {
+    .sp-only {
+        display: inline;
+    }
+
+    .pc-only {
+        display: none;
+    }
+
+    section {
+        padding: 80px 15px;
+    }
+
+    .hero-headline {
+        font-size: clamp(27px, 7vw, 48px);
+        line-height: 1.5;
+    }
+
+    .hero-subheadline {
+        font-size: clamp(16px, 4vw, 20px);
+    }
+
+    .content-left {
+        max-width: 100%;
+        padding: 0 15px;
+    }
+
+    .content-left p {
+        margin-bottom: 30px;
+    }
+
+    .content-left h3 {
+        margin-bottom: 50px;
+    }
+
+    .content-left h4 {
+        margin-bottom: 40px;
+    }
+
+    .bullet-list {
+        margin: 40px 0;
+    }
+
+    .bullet-list li {
+        margin-bottom: 15px;
+        padding-left: 25px;
+    }
+
+    .numbered-list {
+        margin: 40px 0;
+    }
+
+    .numbered-list li {
+        margin-bottom: 15px;
+        padding-left: 35px;
+    }
+
+    .sub-heading {
+        margin-top: 40px;
+        margin-bottom: 25px;
+    }
+
+    .content-left p + .bullet-list,
+    .content-left p + .numbered-list {
+        margin-top: 25px;
+    }
+
+    .bullet-list + p,
+    .numbered-list + p {
+        margin-top: 40px;
+    }
+
+    .comparison-item {
+        padding: 30px 25px;
+        margin-bottom: 25px;
+    }
+
+    .frame-role {
+        padding: 35px 30px;
+        margin-bottom: 30px;
+    }
+
+    .comparison-label,
+    .frame-label {
+        margin-bottom: 18px;
+    }
+
+    .signature-wrapper {
+        margin-top: 60px;
+    }
+
+    .signature-image {
+        max-width: 250px;
+        margin-bottom: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: clamp(14px, 4vw, 16px);
+        line-height: 1.9;
+    }
+
+    section {
+        padding: 60px 15px;
+    }
+
+    .content-left p {
+        margin-bottom: 30px;
+    }
+
+    .content-left h3 {
+        margin-bottom: 40px;
+        font-size: clamp(19.5px, 5vw, 28px);
+    }
+
+    .content-left h4 {
+        margin-bottom: 30px;
+        font-size: clamp(17px, 4.5vw, 22px);
+    }
+
+    .bullet-list {
+        margin: 35px 0;
+    }
+
+    .bullet-list li {
+        margin-bottom: 10px;
+        padding-left: 22px;
+        font-size: clamp(14px, 4vw, 16px);
+    }
+
+    .numbered-list {
+        margin: 35px 0;
+    }
+
+    .numbered-list li {
+        margin-bottom: 10px;
+        padding-left: 30px;
+        font-size: clamp(14px, 4vw, 16px);
+    }
+
+    .emphasis {
+        font-size: clamp(15px, 5vw, 22px);
+        margin-bottom: 60px;
+    }
+
+    .emphasis2 {
+        font-size: clamp(14px, 4.5vw, 20px);
+        margin-bottom: 50px;
+    }
+
+    .sub-heading {
+        margin-top: 35px;
+        margin-bottom: 20px;
+        font-size: clamp(18px, 4vw, 22px);
+    }
+
+    .content-left p + .bullet-list,
+    .content-left p + .numbered-list {
+        margin-top: 20px;
+    }
+
+    .bullet-list + p,
+    .numbered-list + p {
+        margin-top: 35px;
+    }
+
+    .comparison-item {
+        padding: 25px 20px;
+        margin-bottom: 20px;
+    }
+
+    .frame-role {
+        padding: 30px 25px;
+        margin-bottom: 25px;
+    }
+
+    .comparison-label,
+    .frame-label {
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+    }
+
+    .signature-wrapper {
+        margin-top: 50px;
+    }
+
+    .signature-image {
+        max-width: 200px;
+        margin-bottom: 20px;
+    }
+}
+
+/* ========================================
+   END OF STYLESHEET
+======================================== */

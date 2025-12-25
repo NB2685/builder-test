@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>診断結果 | 建築者診断</title>
+    <link rel="stylesheet" href="files/style-builder.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* 結果ページ専用スタイル */
+        .result-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .loading-message {
+            text-align: center;
+            padding: 80px 20px;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .error-message {
+            text-align: center;
+            padding: 60px 20px;
+            color: #ff4444;
+            font-size: 1.1rem;
+        }
+
+        .result-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .result-title {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .result-type {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.4;
+        }
+
+        .result-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+        }
+
+        .diagnosis-id {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-family: 'Courier New', monospace;
+            margin-top: 20px;
+        }
+
+        .section-heading {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        /* スコアバー表示 */
+        .scores-section {
+            margin-bottom: 60px;
+        }
+
+        .score-item {
+            margin-bottom: 25px;
+        }
+
+        .score-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .score-name {
+            font-weight: 600;
+        }
+
+        .score-value {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .score-bar-container {
+            width: 100%;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .score-bar {
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.3) 100%);
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 12px;
+        }
+
+        /* Builderタイプカード */
+        .builder-types {
+            margin-bottom: 60px;
+        }
+
+        .type-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .type-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .type-card.highlight {
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.06) 100%);
+        }
+
+        .type-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .type-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .type-description {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .type-description strong {
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 600;
+        }
+
+        /* アクションボタン */
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 60px;
+        }
+
+        .btn-action {
+            padding: 16px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-action:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .result-type {
+                font-size: 1.8rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn-action {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ローディング表示 -->
+        <div id="loading-container" class="loading-message">
+            <p>診断結果を読み込んでいます...</p>
+        </div>
+
+        <!-- エラー表示 -->
+        <div id="error-container" class="error-message" style="display: none;">
+            <p id="error-text">診断結果の取得に失敗しました。</p>
+            <p style="margin-top: 20px; font-size: 0.9rem;">URLが正しいかご確認ください。</p>
+        </div>
+
+        <!-- 結果表示 -->
+        <div id="result-container" class="result-container" style="display: none;">
+
+            <!-- ヘッダー -->
+            <div class="result-header">
+                <div class="result-title">診断完了</div>
+                <h1 class="result-type" id="result-type-name">---</h1>
+                <p class="result-subtitle">あなたの建築者としての道が診断されました</p>
+                <div class="diagnosis-id">診断ID: <span id="diagnosis-id">---</span></div>
+            </div>
+
+            <!-- スコア分布 -->
+            <section class="scores-section">
+                <h2 class="section-heading">📊 あなたのタイプ分布</h2>
+
+                <div class="score-item">
+                    <div class="score-label">
+                        <span class="score-name">Structure Builder</span>
+                        <span class="score-value" id="score-a-value">0%</span>
+                    </div>
+                    <div class="score-bar-container">
+                        <div class="score-bar" id="score-a-bar" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-label">
+                        <span class="score-name">Habitat Builder</span>
+                        <span class="score-value" id="score-b-value">0%</span>
+                    </div>
+                    <div class="score-bar-container">
+                        <div class="score-bar" id="score-b-bar" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-label">
+                        <span class="score-name">Product Builder</span>
+                        <span class="score-value" id="score-c-value">0%</span>
+                    </div>
+                    <div class="score-bar-container">
+                        <div class="score-bar" id="score-c-bar" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-label">
+                        <span class="score-name">System Builder</span>
+                        <span class="score-value" id="score-d-value">0%</span>
+                    </div>
+                    <div class="score-bar-container">
+                        <div class="score-bar" id="score-d-bar" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-label">
+                        <span class="score-name">Sanctuary Builder</span>
+                        <span class="score-value" id="score-e-value">0%</span>
+                    </div>
+                    <div class="score-bar-container">
+                        <div class="score-bar" id="score-e-bar" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5つのBuilderタイプ紹介 -->
+            <section class="builder-types">
+                <h2 class="section-heading">建築者 5つのカテゴリー</h2>
+
+                <div class="type-card" id="type-card-a">
+                    <h3 class="type-name">Structure Builder</h3>
+                    <p class="type-subtitle">構造防衛・都市防災</p>
+                    <p class="type-description">
+                        <strong>役割：</strong>耐震・耐風・耐水の命の防壁構築<br>
+                        <strong>主戦場：</strong>災害多発地域、山・水際<br>
+                        <strong>協働AI：</strong>シミュレーションAI（揺れ／流れ／劣化予測）<br>
+                        <strong>使命：</strong>人を「死なせない」
+                    </p>
+                </div>
+
+                <div class="type-card" id="type-card-b">
+                    <h3 class="type-name">Habitat Builder</h3>
+                    <p class="type-subtitle">生態回復・水循環</p>
+                    <p class="type-description">
+                        <strong>役割：</strong>水・土壌・植生の生命基盤設計<br>
+                        <strong>主戦場：</strong>放棄地、荒廃地、山林、海辺<br>
+                        <strong>協働AI：</strong>環境センシングAI（気温・水質・微生物）<br>
+                        <strong>使命：</strong>地球を「呼吸させる」
+                    </p>
+                </div>
+
+                <div class="type-card" id="type-card-c">
+                    <h3 class="type-name">Product Builder</h3>
+                    <p class="type-subtitle">道具・家財</p>
+                    <p class="type-description">
+                        <strong>役割：</strong>毎日触れる生活クオリティの源をつくる<br>
+                        <strong>主戦場：</strong>工房、地場産業、輸出市場<br>
+                        <strong>協働AI：</strong>製造最適化AI（カット、3D、強度設計）<br>
+                        <strong>使命：</strong>暮らしを「豊かにする」
+                    </p>
+                </div>
+
+                <div class="type-card" id="type-card-d">
+                    <h3 class="type-name">System Builder</h3>
+                    <p class="type-subtitle">社会設計・物流</p>
+                    <p class="type-description">
+                        <strong>役割：</strong>インフラ × 経済 × 法の運用システム構築<br>
+                        <strong>主戦場：</strong>都市、国境、コミュニティ組織<br>
+                        <strong>協働AI：</strong>データ統合AI（交通／配電／市場）<br>
+                        <strong>使命：</strong>文明を「回す」
+                    </p>
+                </div>
+
+                <div class="type-card" id="type-card-e">
+                    <h3 class="type-name">Sanctuary Builder</h3>
+                    <p class="type-subtitle">空間心理・場の治癒</p>
+                    <p class="type-description">
+                        <strong>役割：</strong>共同体の心の安全基地を創る<br>
+                        <strong>主戦場：</strong>住宅、教育、医療、寺院<br>
+                        <strong>協働AI：</strong>光・音・心理フィード最適化AI<br>
+                        <strong>使命：</strong>人を「壊さない」
+                    </p>
+                </div>
+            </section>
+
+            <!-- アクションボタン -->
+            <!--div class="action-buttons">
+                <a href="index.html" class="btn-action">もう一度診断する</a>
+            </div-->
+
+        </div>
+    </div>
+
+    <script>
+        // ========================================
+        // 診断結果表示スクリプト
+        // ========================================
+
+        const API_BASE_URL = 'https://x-sennnin.com/api/tribe_diagnosis';
+
+        // URLから診断IDを取得
+        function getDiagnosisId() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('id');
+        }
+
+        // エラー表示
+        function showError(message) {
+            document.getElementById('loading-container').style.display = 'none';
+            document.getElementById('error-container').style.display = 'block';
+            document.getElementById('error-text').textContent = message;
+        }
+
+        // 診断結果を表示
+        function displayResult(data) {
+            const result = data.result;
+
+            // ヘッダー情報
+            document.getElementById('result-type-name').textContent = result.displayPath;
+            document.getElementById('diagnosis-id').textContent = result.diagnosisId;
+
+            // スコアバーの設定
+            const categories = ['A', 'B', 'C', 'D', 'E'];
+            const percentages = result.percentages;
+
+            categories.forEach(cat => {
+                const percentage = percentages[cat] || 0;
+                const valueEl = document.getElementById(`score-${cat.toLowerCase()}-value`);
+                const barEl = document.getElementById(`score-${cat.toLowerCase()}-bar`);
+
+                if (valueEl) valueEl.textContent = percentage + '%';
+
+                // アニメーション用に初期値0から開始
+                if (barEl) {
+                    setTimeout(() => {
+                        barEl.style.width = percentage + '%';
+                    }, 100);
+                }
+            });
+
+            // トップタイプのカードをハイライト
+            if (result.topCategory) {
+                const topCard = document.getElementById(`type-card-${result.topCategory.toLowerCase()}`);
+                if (topCard) topCard.classList.add('highlight');
+            }
+
+            // 複合型の場合は2番目もハイライト
+            if (result.isCombined && result.secondCategory) {
+                const secondCard = document.getElementById(`type-card-${result.secondCategory.toLowerCase()}`);
+                if (secondCard) secondCard.classList.add('highlight');
+            }
+
+            // ローディングを非表示、結果を表示
+            document.getElementById('loading-container').style.display = 'none';
+            document.getElementById('result-container').style.display = 'block';
+
+            // スムーズにスクロール
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 診断結果を取得
+        async function fetchResult() {
+            const diagnosisId = getDiagnosisId();
+
+            if (!diagnosisId) {
+                showError('診断IDが指定されていません。URLを確認してください。');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/builder_get.php?id=${diagnosisId}`);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: データの取得に失敗しました`);
+                }
+
+                const data = await response.json();
+
+                if (data.status === 'error') {
+                    showError(data.message || '診断結果の取得に失敗しました');
+                    return;
+                }
+
+                // 結果表示
+                displayResult(data);
+
+            } catch (error) {
+                console.error('Result Fetch Error:', error);
+                showError('診断結果の読み込み中にエラーが発生しました。\n' + error.message);
+            }
+        }
+
+        // ページ読み込み時に実行
+        window.addEventListener('DOMContentLoaded', fetchResult);
+    </script>
+</body>
+</html>

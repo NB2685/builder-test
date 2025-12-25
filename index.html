@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>建築者 ~Builder~ 専門診断テスト</title>
+
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-58VDB7VX');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LLD3LDQYPS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-LLD3LDQYPS');
+</script>
+
+    <!-- Meta Tags -->
+    <meta name="description" content="世界戦はじまる。あなたはどこに立つ？建築者には5種類いる。間違った道を歩めば才能は腐る。正しい配置に立てば、文明を救う。">
+    <meta property="og:title" content="建築者 ~Builder~ 専門診断テスト">
+    <meta property="og:description" content="あなたの専門分野が確定する。稼げる市場が分かる。現場ポジションが決まる。">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="files/style-builder.css">
+
+    <!-- SVG FAVICON（モダンブラウザ対応） -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23E8E8E8;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23A0A0A0;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='%230D0D0D'/%3E%3Cpath d='M50 15 L65 45 L95 45 L72 62 L80 92 L50 72 L20 92 L28 62 L5 45 L35 45 Z' fill='url(%23grad)' stroke='%23FFFFFF' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='8' fill='%23FFFFFF'/%3E%3C/svg%3E">
+
+
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-58VDB7VX"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    <!-- 有機線 -->
+    <canvas id="organic-line"></canvas>
+
+    <!-- ========================================
+         スタートページ
+    ======================================== -->
+    <div id="start-page" class="page active">
+
+    <!-- セクション01: ヒーロー -->
+    <section class="sec-hero">
+        <div class="container">
+            <div class="hero-headline">
+                <p>世界戦はじまる。</p>
+            </div>
+            <div class="hero-subheadline">
+                <p>その時、あなたはどこに立つ？</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- セクション02: 5種類 -->
+    <section class="sec-dark-3">
+        <div class="container">
+            <div class="content-left">
+
+                <div class="sacred-quote bh">
+                <strong>Builder には 5 種類いる。</strong><br>
+                    間違った道を歩めば才能は腐る。<br>
+                    正しい配置に立てば、文明を救う。
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- セクション03: あなたが手にするのは -->
+    <section class="sec-light-3">
+        <div class="container">
+            <div class="content-left">
+            <div class="frame-comparison-wrapper">
+                <div class="frame-role frame-setter">
+                    <span class="frame-label">あなたが手にするのは</span>
+                    <div class="frame-description">
+                        <ul class="bullet-list bh">
+                    <li>占いでも、性格診断でもない。</li>
+                    <li>あなたの <strong>専門分野</strong> が確定する</li>
+                    <li>あなたの <strong>稼げる市場</strong> が分かる</li>
+                    <li>あなたの <strong>現場ポジション</strong> が決まる</li>
+                    <li>あなたが <strong>守るべき領域</strong> が明確になる</li>
+                    <li><strong>仲間</strong> とつながり、すぐに動ける</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- セクション04: 結果で分かること -->
+    <section class="sec-light-2">
+        <div class="container">
+            <div class="content-left">
+                <h3 class="center">結果で分かること</h3>
+                <div class="emphasis-warning">
+                <ul class="bullet-list">
+                    <li class="none">あなたは <strong>建築者 ~Builder~</strong>なのか</li>
+                    <li class="none">その中でも何者なのか。</li>
+                </ul>
+            </div>
+            <p class="emphasis">
+                    どの Builder かで<br>
+                    人生の戦場は変わる。</p>
+
+            <p class="emphasis-conclusion">
+            診断後、あなたの<br class="sp-only">未来の輪郭が露になる。</p>
+
+            <!-- スタートボタン -->
+            <div class="cta-section">
+                <button id="start-btn" class="btn btn-primary2">
+                    今すぐ診断する！
+                </button>
+            </div>
+
+        </div>
+    </div>
+    </section>
+
+
+
+    <!-- Footer1 -->
+    <footer class="footer" style="margin-top:0px;">
+        <div class="footer-links">
+            <a href="https://xtribe.me/5paths/tokusho.html" target="_blank">特商法</a> 　　 
+            <a href="https://xtribe.me/5paths/privacy.html" target="_blank">プライバシーポリシー</a>
+        </div>
+        <div class="footer-copyright">
+            © Tribe of Five Paths
+        </div>
+    </footer>
+
+
+    </div>
+<!-- 初期表示ページ終了 -->
+
+
+    <!-- ========================================
+         質問ページ
+    ======================================== -->
+        <section id="question-page" class="page">
+            <div class="container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="progress-text" id="progress-text">Q1/30</div>
+                
+                <div class="question-container">
+                    <h2 class="question-text" id="question-text"></h2>
+                    <div class="choices" id="choices-container">
+                        <!-- Choices will be dynamically inserted -->
+                    </div>
+                </div>
+                
+                <div class="action-area left-aligned" id="complete-action" style="display: none;">
+                    <button id="complete-btn" class="btn btn-primary">診断を完了する</button>
+                </div>
+            </div>
+        </section>
+
+    <!-- ========================================
+         メール入力ページ
+    ======================================== -->
+    <div id="email-page" class="page">
+
+    <!-- セクション01: ヒーロー -->
+    <section class="sec-hero">
+        <div class="container">
+            <div class="hero-headline">
+                <p>診断完了しました。</p>
+            </div>
+            <div class="hero-subheadline">
+                <p>あなたの建築者としての道の詳細が<br>
+                    判明しました。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- セクション02: 迷いの終わり -->
+    <section class="sec-light-1">
+        <div class="container">
+            <div class="content-left">
+                <h3 class="center">迷いの終わり。役割の始まり。</h3>
+                <p class="sub-heading">何者かを探す時代は終わった</p>
+                    <p>あなたが "どこに立つべきか" を決める</p>
+                    <br>
+                    <p>日本の <strong>建築者 ~Builder~</strong> が<br class="sp-only">世界戦に立つとき<br>
+                    配置を間違える余裕はもうない。</p>
+            </div>
+        </div>
+
+<div class="section-divider light"></div>
+    </section>
+
+    <!-- セクション03: 才能は、場所で決まる。 -->
+    <section class="sec-dark-3">
+        <div class="container">
+            <div class="content-left">
+
+                <div class="sacred-quote bh2">
+                    才能は、場所で決まる。<br>
+                    収益は、役割で決まる。
+                </div>
+                <p>自分探しの旅は今日で終わりだ。</p>
+                <p>配置に入れ。</p>
+                <p class="emphasis">行動がすべてだ。</p>
+
+            </div>
+        </div>
+
+<div class="section-divider"></div>
+    </section>
+
+    <!-- メールフォーム -->
+    <section class="sec-light-3" id="email-form-sec">
+        <div class="container">
+            <div class="content-left">
+
+                <h3 class="form-heading">診断結果を受け取る。</h3>
+
+                <form id="payment-form" class="email-form" style="padding-bottom: 60px;">
+                    <input type="hidden" id="page_id" name="page_id" value="builder_diagnosis">
+
+    <!-- お名前入力 -->
+    <div class="form-group">
+        <label for="name-input">お名前：</label>
+        <input 
+            type="text" 
+            id="name-input" 
+            name="name" 
+            required 
+            placeholder="山田 太郎"
+            class="form-input">
+    </div>
+
+    <!-- メールアドレス入力 -->
+                    <div class="form-group">
+                        <label for="email-input">メールアドレス：</label>
+                        <input 
+                            type="email" 
+                            id="email-input" 
+                            name="email" 
+                            required 
+                            placeholder="your@email.com"
+                            class="form-input">
+                    </div>
+                <div id="email-suggestion" class="suggestion-box" style="margin-top: 5px; color: #d32f2f; font-size: 0.9em;"></div>
+
+    <!-- Stripe 決済 -->
+    <div class="form-group">
+        <label>クレジットカード情報：</label>
+        <div id="payment-element">
+            <!-- Stripeの決済フォーム自動生成 -->
+        </div>
+    </div>
+
+                    <p class="privacy-note">
+                        ※ プライバシーポリシーに同意したものとみなします。<br>
+                        診断結果の送付、および当社の商品・サービスに関する<br class="sp-only">お知らせのために利用いたします。
+                    </p>
+
+    <!-- エラーメッセージ表示エリア -->
+    <div id="payment-message" class="hidden"></div>
+
+                    <button type="submit" class="primary-btn submit-btn">
+                        診断結果を全て受け取る
+                    </button>
+                </form>
+
+            <!-- 追伸セクション -->
+                    <h3 class="postscript-title">追伸1</h3>
+                    <p>
+                        世界は、生き残る建築者を求めている。<br>
+                        <br>
+                        コンクリートではなく<br>
+                        命を支える構造を建てられる者だけが<br>
+                        AI時代に必要とされる。
+                    </p>
+        </div>
+    </div>
+
+            </section>
+
+
+            <!-- 追伸セクション2 -->
+    <section class="sec-dark-2">
+        <div class="container">
+            <div class="content-left">
+
+                    <h3 class="postscript-title">追伸2</h3>
+                    <p>
+                        お金でも<br>
+                        成功でも<br>
+                        承認でもない。
+                    </p>
+                    <p>
+                        背中で語れる力<br>
+                        家族を守る力<br>
+                        文明に寄与する力
+                    </p>
+                    <p>
+                        それだけが手に入る。<br>
+                        それ以外は、ここにはない。
+                    </p>
+                    
+            </div>
+        </div>
+
+<div class="section-divider"></div>
+    </section>
+
+            <!-- 追伸セクション3 -->
+    <section class="sec-light-1">
+        <div class="container">
+            <div class="content-left">
+
+                    <h3 class="postscript-title">追伸3</h3>
+                    <p>
+                        最初の <strong>12人のBuilder</strong> には<br>
+                        まだ言えない証が授与される。
+                    </p>
+                    <p>
+                        その旗を掲げる者は<br>
+                        先に立ち、世界を支える責任を負う。
+                    </p>
+                    <p class="emphasis strong">
+                        本気で来い。<br>
+                        逃げる者は来るな。
+                    </p>
+                    <a href="#email-form-sec">
+                    <button class="primary-btn submit-btn">
+                        診断結果を受け取る。
+                    </button></a>
+
+            </div>
+        </div>
+
+<div class="section-divider light"></div>
+    </section>
+
+    <!-- Footer2 -->
+    <footer class="footer" style="margin-top:0px;">
+        <div class="footer-links">
+            <a href="https://xtribe.me/5paths/tokusho.html" target="_blank">特商法</a> 　　 
+            <a href="https://xtribe.me/5paths/privacy.html" target="_blank">プライバシーポリシー</a>
+        </div>
+        <div class="footer-copyright">
+            © Tribe of Five Paths
+        </div>
+    </footer>
+
+
+        </div>
+<!-- 診断完了（登録）ページ終了 -->
+
+    </div>
+
+    <!-- ========================================
+         ローディングオーバーレイ
+    ======================================== -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p class="loading-text">診断結果を処理中...</p>
+        </div>
+    </div>
+
+<!-- Stripe.jsの読み込み -->
+<script src="https://js.stripe.com/v3/"></script>
+
+<!-- JavaScript -->
+<script src="builder_app.js"></script>
+<script src="files/app-organicline.js" defer></script>
+
+<!-- ライブラリ読み込み -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mailcheck@1.1.1/src/mailcheck.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    const emailInput = $('#email-input'); // ID
+    const suggestionBox = $('#email-suggestion');
+
+    // 日本向けドメイン定義
+    const domains = [
+        "gmail.com", "yahoo.co.jp", "icloud.com", "outlook.com", "hotmail.com",
+        "docomo.ne.jp", "ezweb.ne.jp", "softbank.ne.jp", "i.softbank.jp",
+        "au.com", "ymobile.ne.jp", "me.com", "mac.com"
+    ];
+
+    emailInput.on('blur', function() {
+        suggestionBox.empty();
+
+        $(this).mailcheck({
+            domains: domains, // 日本向けドメインリストを適用
+            suggested: function(element, suggestion) {
+                const correctedEmail = suggestion.full;
+                
+                // デザインされたHTMLを生成
+                const html = `
+                    <div class="suggestion-message">
+                        <span>💡 もしかして:</span>
+                        <span class="suggestion-link" data-suggested="${correctedEmail}">
+                            ${correctedEmail}
+                        </span>
+                        <span>ですか？</span>
+                    </div>
+                `;
+                suggestionBox.html(html);
+            },
+            empty: function(element) {
+                suggestionBox.empty();
+            }
+        });
+    });
+
+    // クリック修正機能
+    suggestionBox.on('click', '.suggestion-link', function() {
+        const correctedEmail = $(this).data('suggested');
+        emailInput.val(correctedEmail);
+        
+        // 修正完了エフェクト（一瞬光らせる）
+        emailInput.css('transition', 'background-color 0.2s')
+                  .css('background-color', 'rgba(255,255,255,0.2)');
+        setTimeout(() => {
+            emailInput.css('background-color', '');
+        }, 200);
+
+        suggestionBox.empty();
+        emailInput.focus();
+    });
+});
+</script>
+
+</body>
+</html>
