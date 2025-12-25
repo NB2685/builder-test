@@ -410,7 +410,7 @@ async function initializePayment() {
     try {
         setLoading(true);
 
-        const response = await fetch("create_payment_intent.php", {
+        const response = await fetch("https://x-sennin.com/api/tribe_diagnosis/create_payment_intent.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ items: [{ id: "diagnosis-fee" }] }),
