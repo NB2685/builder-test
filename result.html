@@ -416,10 +416,10 @@
             }
 
             // 複合型の場合は2番目もハイライト
-            if (result.isCombined && result.secondCategory) {
-                const secondCard = document.getElementById(`type-card-${result.secondCategory.toLowerCase()}`);
-                if (secondCard) secondCard.classList.add('highlight');
-            }
+            //if (result.isCombined && result.secondCategory) {
+            //    const secondCard = document.getElementById(`type-card-${result.secondCategory.toLowerCase()}`);
+            //    if (secondCard) secondCard.classList.add('highlight');
+            //}
 
             // ローディングを非表示、結果を表示
             document.getElementById('loading-container').style.display = 'none';

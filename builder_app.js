@@ -403,13 +403,14 @@ function showEmailPage() {
 // ========================================
 // Stripe Payment Logic
 // ========================================
+// ========================================
+// 横1行スマートスタイル
+// ========================================
 
 async function initializePayment() {
     if (elements) return;
 
     try {
-        setLoading(true);
-
         const response = await fetch("https://x-sennin.com/api/tribe_diagnosis/create_payment_intent.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -417,29 +418,57 @@ async function initializePayment() {
         });
 
         if (!response.ok) throw new Error('Payment Intent Creation Failed');
-
         const { clientSecret } = await response.json();
 
+        // ✅ 横1行スマートスタイルの appearance 設定
         const appearance = {
-            theme: 'night', 
+            theme: 'flat',
             variables: {
-                colorPrimary: '#ffffff',
-                colorBackground: 'rgba(255, 255, 255, 0.05)',
-                colorText: '#ffffff',
-                colorDanger: '#ff4444',
+                colorPrimary: '#2b3e50',
+                colorBackground: '#ffffff',
+                colorText: '#111111',
+                colorDanger: '#d14343',
                 fontFamily: '"Noto Sans JP", sans-serif',
                 spacingUnit: '4px',
-                borderRadius: '8px',
+                borderRadius: '4px',
             },
+            rules: {
+                '.Input': {
+                    border: '1px solid #d6d6d6',
+                    boxShadow: '0 1px 0 rgba(0,0,0,0.02)',
+                    padding: '12px',
+                },
+                '.Input:focus': {
+                    border: '1px solid #2b3e50',
+                    boxShadow: '0 0 0 3px rgba(43, 62, 80, 0.15)',
+                },
+                '.Tab': {
+                    border: '1px solid #d6d6d6',
+                    boxShadow: 'none',
+                },
+                '.Tab:hover': {
+                    border: '1px solid #2b3e50',
+                },
+                '.Tab--selected': {
+                    border: '1px solid #2b3e50',
+                    boxShadow: '0 0 0 1px #2b3e50',
+                },
+            }
         };
 
         elements = stripe.elements({ appearance, clientSecret });
+
+        // ✅ 横1行レイアウト（accordion）
         const paymentElement = elements.create("payment", {
-            layout: "tabs",
+            layout: {
+                type: 'accordion',
+                defaultCollapsed: false,
+                radios: true,
+                spacedAccordionItems: false
+            }
         });
 
         paymentElement.mount("#payment-element");
-        setLoading(false);
 
     } catch (error) {
         console.error("Stripe Initialize Error:", error);

@@ -1727,6 +1727,82 @@ section[id] {
 }
 
 
+/* ========================================
+   決済フォーム：横1行スマートスタイル
+   opayment-style.css と同じデザイン
+   ======================================== */
+
+/* Stripe Payment Element のコンテナ */
+#payment-element {
+    padding: 20px;
+    background: #1a1a1a;
+    border: 1px solid #3a3a3a;
+    border-radius: 8px;
+    margin: 30px 0;
+}
+
+/* Light theme override (白背景版) */
+.light-form #payment-element,
+#email-form-sec #payment-element {
+    background: #ffffff;
+    border: 1px solid #d6d6d6;
+    color: #111111;
+}
+
+/* 決済ボタンのスタイル調整 */
+#submit-btn {
+    width: 100%;
+    max-width: 420px;
+    height: 70px;
+    background: #2b3e50;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.6s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 40px auto;
+    font-family: 'Noto Sans JP', sans-serif;
+    letter-spacing: 0.05em;
+}
+
+#submit-btn:hover:not(:disabled) {
+    background: #1a2a3a;
+}
+
+#submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* メッセージ表示 */
+#payment-message {
+    color: #7a1f1f;
+    background: #fff5f5;
+    border-left: 3px solid #d14343;
+    text-align: center;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+/* モバイル対応 */
+@media (max-width: 768px) {
+    #payment-element {
+        padding: 15px;
+        margin: 20px 0;
+    }
+
+    #submit-btn {
+        width: 100%;
+        height: 60px;
+        margin: 30px auto;
+    }
+}
 
 
 /* ========================================
