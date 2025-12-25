@@ -225,7 +225,7 @@
 
 .category-descriptions h2 {
     font-size: 1.8em;
-    color: #2b3e50;
+    color: #f9f9f9;
     margin-bottom: 40px;
     text-align: center;
 }
@@ -362,7 +362,43 @@
     }
 }
 
+    
+    /* ========================================
+       建築者アイコン（SVG）スタイル
+       ======================================== */
 
+    .builder-icon {
+        width: 48px;
+        height: 48px;
+        margin-right: 15px;
+        flex-shrink: 0;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        transition: transform 0.3s ease;
+    }
+
+    .category-card:hover .builder-icon {
+        transform: scale(1.1);
+    }
+
+    .category-card.top-type .builder-icon {
+        filter: drop-shadow(0 4px 8px rgba(255,215,0,0.3));
+    }
+
+    /* h3内のSVGとテキストを横並びに */
+    .category-card h3 {
+        display: flex;
+        align-items: center;
+        gap: 0;
+    }
+
+    /* モバイル対応 */
+    @media (max-width: 768px) {
+        .builder-icon {
+            width: 36px;
+            height: 36px;
+            margin-right: 10px;
+        }
+    }
 
     </style>
 </head>
@@ -445,13 +481,19 @@
                 </div>
             </section>
 
-<!-- 5つのBuilderタイプ紹介セクション（改良版） -->
+<!-- 5つのBuilderタイプ紹介セクション -->
 <div class="category-descriptions">
-    <h2>🏗️ 建築者 5つのカテゴリー</h2>
+    <h2>5つのBuilderタイプ</h2>
 
     <!-- カテゴリーカードは JavaScript で動的にクラスを追加 -->
     <div class="category-card type-A" id="category-card-A">
-        <h3>Structure Builder - 構造防衛・都市防災</h3>
+        <h3>
+        <svg class="builder-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M 30 70 L 30 40 L 45 30 L 45 60" fill="none" stroke="#1B5E9E" stroke-width="4"/>
+                            <circle cx="30" cy="35" r="5" fill="#1B5E9E"/>
+                            <path d="M 55 50 L 70 40 L 85 50" fill="none" stroke="#FFD700" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Structure Builder<br class="sp-only"> - 構造防衛・都市防災</h3>
         <p><strong>役割：</strong>耐震・耐風・耐水の命の防壁構築</p>
         <p><strong>主戦場：</strong>災害多発地域、山・水際</p>
         <p><strong>協働AI：</strong>シミュレーションAI（揺れ／流れ／劣化予測）</p>
@@ -459,7 +501,22 @@
     </div>
 
     <div class="category-card type-B" id="category-card-B">
-        <h3>Habitat Builder - 生態回復・水循環</h3>
+        <h3>
+        <svg class="builder-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path id="roof" d="M32 12 L12 32 H20 V52 H44 V32 H52 L32 12 Z" fill="#1B5E9E" stroke="#0A3A66" stroke-width="2">
+    <animateTransform 
+      attributeName="transform" 
+      attributeType="XML" 
+      type="rotate"
+      values="0 32 32;5 32 32;0 32 32;-5 32 32;0 32 32" 
+      dur="6s" 
+      repeatCount="indefinite" />
+  </path>
+  <rect x="26" y="36" width="12" height="16" fill="#E8F0F7" />
+  <rect x="22" y="44" width="6" height="8" fill="#0A3A66" />
+  <rect x="36" y="44" width="6" height="8" fill="#0A3A66" />
+</svg>
+Habitat Builder<br class="sp-only"> - 生態回復・水循環</h3>
         <p><strong>役割：</strong>水・土壌・植生の生命基盤設計</p>
         <p><strong>主戦場：</strong>放棄地、荒廃地、山林、海辺</p>
         <p><strong>協働AI：</strong>環境センシングAI（気温・水質・微生物）</p>
@@ -467,7 +524,19 @@
     </div>
 
     <div class="category-card type-C" id="category-card-C">
-        <h3>Product Builder - 道具・家財</h3>
+        <h3>
+        <svg class="builder-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="32" cy="32" r="28" stroke="#27AE60" stroke-width="3" fill="#D4EAC7" />
+      <path d="M24 40 C26 45, 38 45, 40 40" stroke="#1B5E9E" stroke-width="3" fill="none"
+        stroke-dasharray="40" stroke-dashoffset="0">
+        <animate attributeName="stroke-dashoffset" values="0;40;0" dur="4s" repeatCount="indefinite" />
+      </path>
+      <path d="M32 24 A8 8 0 0 1 40 32" stroke="#1B5E9E" stroke-width="3" fill="none"
+        stroke-dasharray="40" stroke-dashoffset="40">
+        <animate attributeName="stroke-dashoffset" values="40;0;40" dur="4s" begin="2s" repeatCount="indefinite" />
+      </path>
+    </svg>
+    Product Builder<br class="sp-only"> - 道具・家財</h3>
         <p><strong>役割：</strong>毎日触れる生活クオリティの源をつくる</p>
         <p><strong>主戦場：</strong>工房、地場産業、輸出市場</p>
         <p><strong>協働AI：</strong>製造最適化AI（カット、3D、強度設計）</p>
@@ -475,7 +544,17 @@
     </div>
 
     <div class="category-card type-D" id="category-card-D">
-        <h3>System Builder - 社会設計・物流</h3>
+        <h3>
+        <svg class="builder-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="14" y="20" width="36" height="24" rx="4" ry="4" fill="#E67E22" stroke="#9C5C00" stroke-width="2" />
+  <line x1="14" y1="28" x2="50" y2="28" stroke="#9C5C00" stroke-width="2">
+    <animate attributeName="x2" values="50;14;50" dur="3s" repeatCount="indefinite" />
+  </line>
+  <circle cx="32" cy="42" r="6" fill="#C45B00">
+    <animate attributeName="r" values="6;8;6" dur="3s" repeatCount="indefinite" />
+  </circle>
+</svg>
+System Builder<br class="sp-only"> - 社会設計・物流</h3>
         <p><strong>役割：</strong>インフラ × 経済 × 法の運用システム構築</p>
         <p><strong>主戦場：</strong>都市、国境、コミュニティ組織</p>
         <p><strong>協働AI：</strong>データ統合AI（交通／配電／市場）</p>
@@ -483,7 +562,23 @@
     </div>
 
     <div class="category-card type-E" id="category-card-E">
-        <h3>Sanctuary Builder - 空間心理・場の治癒</h3>
+        <h3>
+            <svg class="builder-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="16" y="14" width="32" height="36" rx="4" ry="4" fill="#3498DB" stroke="#0B3D91" stroke-width="2" />
+  <path id="arrow" d="M26 30 L38 22 L38 42 L26 34 Z" fill="#E8F0F7">
+    <animateTransform 
+      attributeName="transform" 
+      attributeType="XML" 
+      type="translate" 
+      values="0 0; 4 0; 0 0;" 
+      dur="3s"
+      repeatCount="indefinite" />
+  </path>
+  <rect x="22" y="38" width="20" height="6" fill="#0A3A66">
+    <animate attributeName="width" values="20;24;20" dur="3s" repeatCount="indefinite" />
+  </rect>
+</svg>
+Sanctuary Builder<br class="sp-only"> - 空間心理・場の治癒</h3>
         <p><strong>役割：</strong>共同体の心の安全基地を創る</p>
         <p><strong>主戦場：</strong>住宅、教育、医療、寺院</p>
         <p><strong>協働AI：</strong>光・音・心理フィード最適化AI</p>
