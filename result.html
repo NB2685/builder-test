@@ -213,6 +213,157 @@
                 width: 100%;
             }
         }
+
+
+/* ========================================
+   改良版カテゴリーカードスタイル
+   ======================================== */
+
+.category-descriptions {
+    margin-top: 60px;
+}
+
+.category-descriptions h2 {
+    font-size: 1.8em;
+    color: #2b3e50;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.category-card {
+    background: #fff;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ホバー効果 */
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border-color: #2b3e50;
+}
+
+/* トップタイプのハイライト */
+.category-card.top-type {
+    background: linear-gradient(135deg, #2b3e50 0%, #3d5266 100%);
+    border: 3px solid #2b3e50;
+    box-shadow: 0 10px 40px rgba(43, 62, 80, 0.3);
+}
+
+.category-card.top-type h3 {
+    color: #fff !important;
+}
+
+.category-card.top-type p {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.category-card.top-type strong {
+    color: #ffd700 !important;
+}
+
+/* トップバッジ */
+.category-card.top-type::before {
+    content: '★ あなたのトップタイプ';
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #ffd700;
+    color: #2b3e50;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+/* セカンドタイプのハイライト */
+.category-card.second-type {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px solid #6c757d;
+}
+
+.category-card.second-type h3 {
+    color: #495057 !important;
+}
+
+/* セカンドバッジ */
+.category-card.second-type::before {
+    content: '2nd';
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #6c757d;
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: bold;
+}
+
+.category-card h3 {
+    font-size: 1.5em;
+    color: #2b3e50;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* カテゴリーアイコン */
+.category-card h3::before {
+    content: '';
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #2b3e50 0%, #4a5f7f 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+}
+
+.category-card.type-A h3::before { content: '🏗️'; background: none; }
+.category-card.type-B h3::before { content: '🌿'; background: none; }
+.category-card.type-C h3::before { content: '🔨'; background: none; }
+.category-card.type-D h3::before { content: '🌐'; background: none; }
+.category-card.type-E h3::before { content: '🏛️'; background: none; }
+
+.category-card p {
+    color: #555;
+    line-height: 1.8;
+    margin: 10px 0;
+    font-size: 1em;
+}
+
+.category-card strong {
+    color: #2b3e50;
+    font-weight: 600;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .category-card {
+        padding: 20px;
+    }
+
+    .category-card h3 {
+        font-size: 1.3em;
+    }
+
+    .category-card.top-type::before,
+    .category-card.second-type::before {
+        font-size: 0.8em;
+        padding: 4px 10px;
+    }
+}
+
+
+
     </style>
 </head>
 <body>
@@ -235,13 +386,13 @@
             <div class="result-header">
                 <div class="result-title">診断完了</div>
                 <h1 class="result-type" id="result-type-name">---</h1>
-                <p class="result-subtitle">あなたの建築者としての道が診断されました</p>
+                <p class="result-subtitle">あなたの建築者としての道が<br class="sp-only">診断されました</p>
                 <div class="diagnosis-id">診断ID: <span id="diagnosis-id">---</span></div>
             </div>
 
             <!-- スコア分布 -->
-            <section class="scores-section">
-                <h2 class="section-heading">📊 あなたのタイプ分布</h2>
+            <section class="scores-section" style="padding-top:0px!important;">
+                <h2 class="section-heading">あなたのタイプ分布</h2>
 
                 <div class="score-item">
                     <div class="score-label">
@@ -294,64 +445,53 @@
                 </div>
             </section>
 
-            <!-- 5つのBuilderタイプ紹介 -->
-            <section class="builder-types">
-                <h2 class="section-heading">建築者 5つのカテゴリー</h2>
+<!-- 5つのBuilderタイプ紹介セクション（改良版） -->
+<div class="category-descriptions">
+    <h2>🏗️ 建築者 5つのカテゴリー</h2>
 
-                <div class="type-card" id="type-card-a">
-                    <h3 class="type-name">Structure Builder</h3>
-                    <p class="type-subtitle">構造防衛・都市防災</p>
-                    <p class="type-description">
-                        <strong>役割：</strong>耐震・耐風・耐水の命の防壁構築<br>
-                        <strong>主戦場：</strong>災害多発地域、山・水際<br>
-                        <strong>協働AI：</strong>シミュレーションAI（揺れ／流れ／劣化予測）<br>
-                        <strong>使命：</strong>人を「死なせない」
-                    </p>
-                </div>
+    <!-- カテゴリーカードは JavaScript で動的にクラスを追加 -->
+    <div class="category-card type-A" id="category-card-A">
+        <h3>Structure Builder - 構造防衛・都市防災</h3>
+        <p><strong>役割：</strong>耐震・耐風・耐水の命の防壁構築</p>
+        <p><strong>主戦場：</strong>災害多発地域、山・水際</p>
+        <p><strong>協働AI：</strong>シミュレーションAI（揺れ／流れ／劣化予測）</p>
+        <p><strong>使命：</strong>人を「死なせない」</p>
+    </div>
 
-                <div class="type-card" id="type-card-b">
-                    <h3 class="type-name">Habitat Builder</h3>
-                    <p class="type-subtitle">生態回復・水循環</p>
-                    <p class="type-description">
-                        <strong>役割：</strong>水・土壌・植生の生命基盤設計<br>
-                        <strong>主戦場：</strong>放棄地、荒廃地、山林、海辺<br>
-                        <strong>協働AI：</strong>環境センシングAI（気温・水質・微生物）<br>
-                        <strong>使命：</strong>地球を「呼吸させる」
-                    </p>
-                </div>
+    <div class="category-card type-B" id="category-card-B">
+        <h3>Habitat Builder - 生態回復・水循環</h3>
+        <p><strong>役割：</strong>水・土壌・植生の生命基盤設計</p>
+        <p><strong>主戦場：</strong>放棄地、荒廃地、山林、海辺</p>
+        <p><strong>協働AI：</strong>環境センシングAI（気温・水質・微生物）</p>
+        <p><strong>使命：</strong>地球を「呼吸させる」</p>
+    </div>
 
-                <div class="type-card" id="type-card-c">
-                    <h3 class="type-name">Product Builder</h3>
-                    <p class="type-subtitle">道具・家財</p>
-                    <p class="type-description">
-                        <strong>役割：</strong>毎日触れる生活クオリティの源をつくる<br>
-                        <strong>主戦場：</strong>工房、地場産業、輸出市場<br>
-                        <strong>協働AI：</strong>製造最適化AI（カット、3D、強度設計）<br>
-                        <strong>使命：</strong>暮らしを「豊かにする」
-                    </p>
-                </div>
+    <div class="category-card type-C" id="category-card-C">
+        <h3>Product Builder - 道具・家財</h3>
+        <p><strong>役割：</strong>毎日触れる生活クオリティの源をつくる</p>
+        <p><strong>主戦場：</strong>工房、地場産業、輸出市場</p>
+        <p><strong>協働AI：</strong>製造最適化AI（カット、3D、強度設計）</p>
+        <p><strong>使命：</strong>暮らしを「豊かにする」</p>
+    </div>
 
-                <div class="type-card" id="type-card-d">
-                    <h3 class="type-name">System Builder</h3>
-                    <p class="type-subtitle">社会設計・物流</p>
-                    <p class="type-description">
-                        <strong>役割：</strong>インフラ × 経済 × 法の運用システム構築<br>
-                        <strong>主戦場：</strong>都市、国境、コミュニティ組織<br>
-                        <strong>協働AI：</strong>データ統合AI（交通／配電／市場）<br>
-                        <strong>使命：</strong>文明を「回す」
-                    </p>
-                </div>
+    <div class="category-card type-D" id="category-card-D">
+        <h3>System Builder - 社会設計・物流</h3>
+        <p><strong>役割：</strong>インフラ × 経済 × 法の運用システム構築</p>
+        <p><strong>主戦場：</strong>都市、国境、コミュニティ組織</p>
+        <p><strong>協働AI：</strong>データ統合AI（交通／配電／市場）</p>
+        <p><strong>使命：</strong>文明を「回す」</p>
+    </div>
 
-                <div class="type-card" id="type-card-e">
-                    <h3 class="type-name">Sanctuary Builder</h3>
-                    <p class="type-subtitle">空間心理・場の治癒</p>
-                    <p class="type-description">
-                        <strong>役割：</strong>共同体の心の安全基地を創る<br>
-                        <strong>主戦場：</strong>住宅、教育、医療、寺院<br>
-                        <strong>協働AI：</strong>光・音・心理フィード最適化AI<br>
-                        <strong>使命：</strong>人を「壊さない」
-                    </p>
-                </div>
+    <div class="category-card type-E" id="category-card-E">
+        <h3>Sanctuary Builder - 空間心理・場の治癒</h3>
+        <p><strong>役割：</strong>共同体の心の安全基地を創る</p>
+        <p><strong>主戦場：</strong>住宅、教育、医療、寺院</p>
+        <p><strong>協働AI：</strong>光・音・心理フィード最適化AI</p>
+        <p><strong>使命：</strong>人を「壊さない」</p>
+    </div>
+</div>
+
+
             </section>
 
             <!-- アクションボタン -->
