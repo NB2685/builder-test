@@ -1,0 +1,1384 @@
+/* ========================================
+   未来シミュレーション白書デザイン
+   2025.12.17制作 by Nobu
+======================================== */
+
+/* ========================================
+   リセット & ベース設定
+======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: clamp(15px, 4vw, 18px);
+    font-weight: 400;
+    line-height: 2.0;
+    color: #e6e6e6;
+    background: #0f0f0f;
+    letter-spacing: 0.03em;
+}
+
+/* ========================================
+   Sacred Quote（神聖な引用）
+   中央配置の大きな引用テキスト
+======================================== */
+
+.sacred-quote {
+    font-family: 'SF Pro Display', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: clamp(1.4rem, 4.5vw, 2.1rem);
+    font-weight: 500;
+    line-height: 2.2;
+    letter-spacing: 0.1em;
+    text-align: center;
+    margin: 100px auto 140px auto;
+    padding: 80px 30px;
+    max-width: 800px;
+    /* 背景・枠線 */
+    background: linear-gradient(180deg, rgba(234, 234, 234, 0.03), rgba(234, 234, 234, 0.06));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    /* 光のエフェクト */
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    /* アニメーション */
+    transition: all 1.4s ease;
+}
+
+.sacred-quote:hover {
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+    transform: scale(1.01);
+}
+
+.sacred-quote.light-mode {
+    color: #1a1a1a;
+    background: linear-gradient(180deg, rgba(21, 21, 21, 0.03), rgba(21, 21, 21, 0.06));
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* スマホ対応 */
+@media (max-width: 768px) {
+    .sacred-quote {
+        font-size: clamp(1.1rem, 4vw, 1.6rem);
+        padding: 60px 20px;
+        margin: 60px auto 80px auto;
+        letter-spacing: 0.06em;
+    }
+}
+
+@media (max-width: 480px) {
+    .sacred-quote {
+        padding: 40px 16px;
+        margin: 40px auto 60px auto;
+    }
+}
+
+/* ========================================
+   共通セクション設定
+======================================== */
+
+section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 120px 20px;
+    position: relative;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ========================================
+   セクション背景色バリエーション
+======================================== */
+
+/* ダーク系 */
+.sec-hero {
+    background: #0a0a0a;
+    text-align: center;
+    justify-content: flex-end;
+    padding-bottom: 45vh;
+}
+
+.sec-dark-1 {
+    background: #0f0f0f;
+    align-items: flex-start;
+}
+
+.sec-dark-2 {
+    background: #1a1a1a;
+    align-items: flex-start;
+}
+
+.sec-dark-3 {
+    background: #141414;
+    align-items: flex-start;
+}
+
+.sec-final {
+    background: #0a0a0a;
+    text-align: left;
+    min-height: 100vh;
+}
+
+/* ライト系 */
+.sec-light-1 {
+    background: #f4f4f4;
+    align-items: flex-start;
+}
+
+.sec-light-2 {
+    background: #e6e6e6;
+    align-items: flex-start;
+}
+
+.sec-light-3 {
+    background: #ececec;
+    align-items: flex-start;
+}
+
+/* ========================================
+   ヒーローセクション
+======================================== */
+
+.hero-headline {
+    font-size: clamp(40px, 8vw, 60px);
+    font-weight: 600;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+    color: #e6e6e6;
+    margin-bottom: 30px;
+}
+
+.hero-headline p {
+    margin-bottom: 20px;
+}
+
+.hero-subheadline {
+    font-size: clamp(18px, 4vw, 26px);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #c4c4c4;
+}
+
+/* ========================================
+   左寄せコンテンツ（最大幅600px）
+======================================== */
+
+.content-left {
+    max-width: 600px;
+    text-align: left;
+    margin: 0 auto;
+}
+
+.content-left p {
+    margin-bottom: 30px;
+}
+
+.content-left p:last-child {
+    margin-bottom: 0;
+}
+
+/* ========================================
+   ライトセクションのテキスト色
+======================================== */
+
+.sec-light-1 .content-left p,
+.sec-light-1 .content-left h3,
+.sec-light-1 .content-left h4,
+.sec-light-1 .content-left .sub-heading,
+.sec-light-1 .content-left .bullet-list li,
+.sec-light-1 .content-left .numbered-list li {
+    color: #1a1a1a;
+}
+
+.sec-light-1 .emphasis {
+    color: #2d2d2d;
+}
+
+.sec-light-1 .emphasis2 {
+    color: #2d2d2d;
+}
+
+.sec-light-2 .content-left p,
+.sec-light-2 .content-left h3,
+.sec-light-2 .content-left h4,
+.sec-light-2 .content-left .sub-heading,
+.sec-light-2 .content-left .bullet-list li,
+.sec-light-2 .content-left .numbered-list li {
+    color: #1a1a1a;
+}
+
+.sec-light-2 .emphasis {
+    color: #2d2d2d;
+}
+
+.sec-light-2 .emphasis2 {
+    color: #2d2d2d;
+}
+
+.sec-light-3 .content-left p,
+.sec-light-3 .content-left h3,
+.sec-light-3 .content-left h4,
+.sec-light-3 .content-left .sub-heading,
+.sec-light-3 .content-left .bullet-list li,
+.sec-light-3 .content-left .numbered-list li {
+    color: #1a1a1a;
+}
+
+.sec-light-3 .emphasis {
+    color: #2d2d2d;
+}
+
+.sec-light-3 .emphasis2 {
+    color: #2d2d2d;
+}
+
+/* ========================================
+   テキスト強調スタイル
+======================================== */
+
+.first {
+    font-weight: 500;
+    font-size: clamp(16px, 5.5vw, 26px);
+}
+
+.first-emphasis {
+    font-weight: 500;
+    font-size: 200%;
+    margin-bottom: 80px;
+    line-height: 2.2;
+}
+
+
+.emphasis {
+    color: #c4c4c4;
+    font-weight: 500;
+    font-size: clamp(16px, 5.5vw, 26px);
+    margin-bottom: 80px;
+    line-height: 2.2;
+}
+
+.emphasis2 {
+    color: #c4c4c4;
+    font-weight: 500;
+    font-size: clamp(15px, 4.5vw, 22px);
+    margin-bottom: 70px;
+    line-height: 2.0;
+}
+
+.center{
+    text-align: center;
+}
+
+.oblique{
+    font-style: oblique;
+}
+
+.strong{
+    font-weight: bold;
+}
+
+/* ========================================
+   見出しスタイル
+======================================== */
+
+.content-left h3 {
+    font-size: clamp(22px, 5vw, 30px);
+    font-weight: 600;
+    color: #c9c9c9;
+    margin-bottom: 80px;
+    margin-top: 0;
+    line-height: 1.8;
+}
+
+.content-left h4 {
+    font-size: clamp(18px, 4.5vw, 24px);
+    font-weight: 500;
+    color: #c9c9c9;
+    margin-bottom: 50px;
+    margin-top: 0;
+    line-height: 1.8;
+}
+
+.sec-light-1 .content-left h3,
+.sec-light-2 .content-left h3,
+.sec-light-3 .content-left h3 {
+    color: #1a1a1a;
+}
+
+.sec-light-1 .content-left h4,
+.sec-light-2 .content-left h4,
+.sec-light-3 .content-left h4 {
+    color: #2d2d2d;
+}
+
+.sub-heading {
+    font-size: clamp(16px, 4vw, 28px);
+    font-weight: 600;
+    color: #c9c9c9;
+    margin-bottom: 30px;
+    margin-top: 50px;
+    display: block;
+}
+
+.sec-light-1 .sub-heading,
+.sec-light-2 .sub-heading,
+.sec-light-3 .sub-heading {
+    color: #2d2d2d;
+}
+
+/* ========================================
+   リストスタイル
+======================================== */
+
+.bullet-list {
+    list-style: none;
+    margin: 50px 0;
+    padding-left: 0;
+}
+
+.bullet-list li {
+    margin-bottom: 15px;
+    padding-left: 30px;
+    position: relative;
+    color: #e6e6e6;
+}
+
+.bullet-list li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    font-weight: 600;
+}
+
+.bullet-list li.none {
+    margin-bottom: 15px;
+    padding-left: 0px;
+    position: relative;
+    color: #e6e6e6;
+}
+
+.bullet-list li.none:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    font-weight: 600;
+}
+
+.bullet-list li:last-child {
+    margin-bottom: 0;
+}
+
+.numbered-list {
+    list-style: none;
+    margin: 50px 0;
+    padding-left: 0;
+    counter-reset: item;
+}
+
+.numbered-list li {
+    margin-bottom: 15px;
+    padding-left: 40px;
+    position: relative;
+    color: #e6e6e6;
+}
+
+.numbered-list li:before {
+    content: counter(item) ".";
+    counter-increment: item;
+    position: absolute;
+    left: 0;
+    font-weight: 600;
+}
+
+.numbered-list li:last-child {
+    margin-bottom: 0;
+}
+
+/* ライトセクションのリスト色 */
+.sec-light-1 .bullet-list li,
+.sec-light-2 .bullet-list li,
+.sec-light-3 .bullet-list li,
+.sec-light-1 .numbered-list li,
+.sec-light-2 .numbered-list li,
+.sec-light-3 .numbered-list li {
+    color: #1a1a1a;
+}
+
+/* ========================================
+   最終セクション
+======================================== */
+
+.final-content {
+    max-width: 800px;
+}
+
+.final-content h3 {
+    font-size: clamp(20px, 4.5vw, 26px);
+    font-weight: 500;
+    margin-bottom: 50px;
+    line-height: 2.0;
+}
+
+.final-content p {
+    font-size: clamp(16px, 4vw, 20px);
+    line-height: 2.2;
+    margin-bottom: 60px;
+}
+
+.signature {
+    font-size: clamp(13px, 3.5vw, 16px);
+    color: #888888;
+    margin-top: 80px;
+    text-align: right;
+}
+
+.signature p {
+    margin-bottom: 10px;
+    font-size: clamp(13px, 3.5vw, 16px);
+}
+
+/* ========================================
+   フッター
+======================================== */
+
+.footer {
+    background: #000;
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+.footer-links {
+    display: inline;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
+
+.footer-copyright {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.05em;
+    margin-top: 20px;
+}
+
+/* ========================================
+   モバイル最適化
+======================================== */
+
+        /* ========== スマホ専用改行 ========== */
+        .sp-only {
+            display: none;
+        }
+
+        .pc-only {
+            display: inline;
+        }
+
+        @media (max-width: 768px) {
+            .sp-only {
+                display: inline;
+            }
+            .pc-only {
+                display: none;
+            }
+        }
+
+@media (max-width: 768px) {
+    section {
+        padding: 80px 15px;
+    }
+
+    .hero-headline {
+        font-size: clamp(27px, 7vw, 48px);
+        line-height: 1.5;
+    }
+
+    .hero-subheadline {
+        font-size: clamp(16px, 4vw, 20px);
+    }
+
+    .content-left {
+        max-width: 100%;
+        padding: 0 15px;
+    }
+
+    .content-left p {
+        margin-bottom: 30px;
+    }
+
+    .content-left h3 {
+        margin-bottom: 50px;
+    }
+
+    .content-left h4 {
+        margin-bottom: 40px;
+    }
+
+    .bullet-list {
+        margin: 40px 0;
+    }
+
+    .bullet-list li {
+        margin-bottom: 15px;
+        padding-left: 25px;
+    }
+
+    .numbered-list {
+        margin: 40px 0;
+    }
+
+    .numbered-list li {
+        margin-bottom: 15px;
+        padding-left: 35px;
+    }
+
+    .sub-heading {
+        margin-top: 40px;
+        margin-bottom: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: clamp(14px, 4vw, 16px);
+        line-height: 1.9;
+    }
+
+    section {
+        padding: 60px 15px;
+    }
+
+    .content-left p {
+        margin-bottom: 30px;
+    }
+
+    .content-left h3 {
+        margin-bottom: 40px;
+        font-size: clamp(19.5px, 5vw, 28px);
+    }
+
+    .content-left h4 {
+        margin-bottom: 30px;
+        font-size: clamp(17px, 4.5vw, 22px);
+    }
+
+    .bullet-list {
+        margin: 35px 0;
+    }
+
+    .bullet-list li {
+        margin-bottom: 10px;
+        padding-left: 22px;
+        font-size: clamp(14px, 4vw, 16px);
+    }
+
+    .numbered-list {
+        margin: 35px 0;
+    }
+
+    .numbered-list li {
+        margin-bottom: 10px;
+        padding-left: 30px;
+        font-size: clamp(14px, 4vw, 16px);
+    }
+
+    .emphasis {
+        font-size: clamp(15px, 5vw, 22px);
+        margin-bottom: 60px;
+    }
+
+    .emphasis2 {
+        font-size: clamp(14px, 4.5vw, 20px);
+        margin-bottom: 50px;
+    }
+
+    .sub-heading {
+        margin-top: 35px;
+        margin-bottom: 20px;
+        font-size: clamp(18px, 4vw, 22px);
+    }
+}
+
+/* ========================================
+   特殊調整：段落内のリスト前後の余白削減
+======================================== */
+
+.content-left p + .bullet-list,
+.content-left p + .numbered-list {
+    margin-top: 30px;
+}
+
+.bullet-list + p,
+.numbered-list + p {
+    margin-top: 50px;
+}
+
+@media (max-width: 768px) {
+    .content-left p + .bullet-list,
+    .content-left p + .numbered-list {
+        margin-top: 25px;
+    }
+
+    .bullet-list + p,
+    .numbered-list + p {
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .content-left p + .bullet-list,
+    .content-left p + .numbered-list {
+        margin-top: 20px;
+    }
+
+    .bullet-list + p,
+    .numbered-list + p {
+        margin-top: 35px;
+    }
+}
+
+/* ========================================
+   署名セクション
+======================================== */
+
+.signature-wrapper {
+    margin-top: 80px;
+    text-align: left;
+    max-width: 600px;
+}
+
+.signature-image {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    display: block;
+    margin-bottom: 30px;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+.signature-image:hover {
+    opacity: 1;
+}
+
+.signature-text {
+    font-size: clamp(13px, 3.5vw, 16px);
+    color: #888888;
+    text-align: left;
+    line-height: 1.8;
+}
+
+.signature-text p {
+    margin-bottom: 0;
+    font-size: clamp(13px, 3.5vw, 16px);
+}
+
+/* モバイル最適化 */
+@media (max-width: 768px) {
+    .signature-wrapper {
+        margin-top: 60px;
+    }
+
+    .signature-image {
+        max-width: 250px;
+        margin-bottom: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .signature-wrapper {
+        margin-top: 50px;
+    }
+
+    .signature-image {
+        max-width: 200px;
+        margin-bottom: 20px;
+    }
+}
+
+
+/* ========================================
+   有機線
+======================================== */
+
+#organic-line {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    pointer-events: none;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    opacity: 0.6;
+    filter: blur(1px);
+}
+
+/* ========================================
+   スクロール体験の向上
+======================================== */
+
+html {
+    scroll-padding-top: 20px;
+}
+
+/* スムーズスクロールのためのアンカー調整 */
+section[id] {
+    scroll-margin-top: 20px;
+}
+
+/* ========================================
+   印刷スタイル（オプション）
+======================================== */
+
+@media print {
+    section {
+        page-break-inside: avoid;
+        min-height: auto;
+        padding: 40px 20px;
+    }
+
+    .sacred-quote {
+        page-break-inside: avoid;
+    }
+
+    .footer {
+        page-break-before: always;
+    }
+}
+
+
+/* ========================================
+   アップデート
+======================================== */
+
+/* セクション別の余白調整 */
+.content-left p.spacing-large {
+    margin-bottom: 60px; /* Year 4-10などの重要転換点 */
+}
+
+.content-left p.spacing-xlarge {
+    margin-bottom: 100px; /* 章の終わり、大きな転換点 */
+}
+
+.content-left .list-group {
+    margin: 60px 0; /* リストグループ全体に余白 */
+}
+
+/* 特別なセクション用のアクセント背景 */
+.sec-accent-dark {
+    background: linear-gradient(180deg, #0a0a0a 0%, #141414 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sec-accent-light {
+    background: linear-gradient(180deg, #f4f4f4 0%, #e6e6e6 100%);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+
+/* セクション間の視覚的区切り線 */
+/* <div class="section-divider"></div> */
+.section-divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #c9c9c9, transparent);
+    margin: 100px auto;
+}
+
+.section-divider.light {
+    background: linear-gradient(90deg, transparent, #2d2d2d, transparent);
+}
+
+/* 警告的な強調 */
+/* 
+シルバー　#3a3a3a; #d0d0d0;
+ブルー　　#2b3e50;
+*/
+.black{
+    color: #0a0a0a!important;
+}
+.silver{
+    color: #3a3a3a;
+}
+.blue{
+    color: #2b3e50;
+    background-color: #fff;
+    padding: 10px;
+}
+
+.emphasis-warning {
+    color: #d0d0d0;
+    font-weight: 600;
+    font-size: clamp(17px, 5vw, 24px);
+    margin-bottom: 50px;
+    padding: 30px;
+    border-left: 3px solid #2b3e50;
+    border-radius: 8px;
+}
+
+/* ========================================
+   結論的な強調（ライト/ダーク両対応）
+======================================== */
+
+.emphasis-conclusion {
+    font-size: clamp(18px, 5vw, 28px);
+    font-weight: 600;
+    text-align: center;
+    margin: 80px auto; /* 上下の余白を十分に確保 */
+    padding: 40px 20px;
+    transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+
+/* --- ライトセクション用のスタイル --- */
+.sec-light-1 .emphasis-conclusion,
+.sec-light-2 .emphasis-conclusion,
+.sec-light-3 .emphasis-conclusion {
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    color: #1a1a1a; /* ライトモード用の文字色 */
+}
+
+/* --- ダークセクション用のスタイル --- */
+.sec-dark-1 .emphasis-conclusion,
+.sec-dark-2 .emphasis-conclusion,
+.sec-dark-3 .emphasis-conclusion,
+.sec-final .emphasis-conclusion {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e6e6e6; /* ダークモード用の文字色 */
+}
+
+/* オプション：マウスホバー時の効果 */
+.emphasis-conclusion:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.sec-light-1 .emphasis-conclusion:hover,
+.sec-light-2 .emphasis-conclusion:hover,
+.sec-light-3 .emphasis-conclusion:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+/* リストグループのヘッダー */
+.list-group-header {
+    font-size: clamp(16px, 4vw, 19px);
+    font-weight: 600;
+    color: #c9c9c9;
+    margin-bottom: 20px;
+    margin-top: 60px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sec-light-1 .list-group-header,
+.sec-light-2 .list-group-header,
+.sec-light-3 .list-group-header {
+    color: #2d2d2d;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Yearヘッダーの強化 */
+.year-header {
+    font-size: clamp(24px, 5.5vw, 36px);
+    font-weight: 700;
+    margin-bottom: 60px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.sec-light-1 .year-header,
+.sec-light-2 .year-header,
+.sec-light-3 .year-header {
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+/* 反論をカード形式で視覚的に分離 */
+.refutation-card {
+    padding: 50px 40px;
+    margin: 60px 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.sec-light-1 .refutation-card,
+.sec-light-2 .refutation-card,
+.sec-light-3 .refutation-card {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.02);
+}
+
+        .underline {
+            text-decoration:underline;
+            text-decoration-color: #2d4356;
+        }
+
+
+/* ========================================
+   対比表現の装飾クラス
+======================================== */
+
+/* AI以前/AI以後の対比 */
+.comparison-wrapper {
+    margin: 80px 0;
+}
+
+.comparison-item {
+    padding: 40px 35px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.comparison-item:last-child {
+    margin-bottom: 0;
+}
+
+/* AI以前（過去）のスタイル */
+.comparison-before {
+    background: rgba(100, 100, 100, 0.15);
+    border-left: 4px solid #888;
+}
+
+.sec-light-1 .comparison-before,
+.sec-light-2 .comparison-before,
+.sec-light-3 .comparison-before {
+    background: rgba(150, 150, 150, 0.12);
+    border-left: 4px solid #666;
+}
+
+/* AI以後（現在/未来）のスタイル */
+.comparison-after {
+    background: rgba(230, 80, 80, 0.12);
+    border-left: 4px solid #2b3e50;
+}
+
+.sec-light-1 .comparison-after,
+.sec-light-2 .comparison-after,
+.sec-light-3 .comparison-after {
+    background: #f4f4f4;
+    border-left: 4px solid #2b3e50;
+}
+
+/* 対比ラベル */
+.comparison-label {
+    font-size: clamp(15px, 4vw, 19px);
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: 0.08em;
+    display: block;
+}
+
+.comparison-before .comparison-label {
+    color: #aaa;
+}
+
+.sec-light-1 .comparison-before .comparison-label,
+.sec-light-2 .comparison-before .comparison-label,
+.sec-light-3 .comparison-before .comparison-label {
+    color: #666;
+}
+
+.comparison-after .comparison-label {
+    color: #2b3e50;
+}
+
+.sec-light-1 .comparison-after .comparison-label,
+.sec-light-2 .comparison-after .comparison-label,
+.sec-light-3 .comparison-after .comparison-label {
+    color: #2b3e50;
+}
+
+/* ========================================
+   フレーム設定者/充填者の装飾
+======================================== */
+
+/* フレーム対比のラッパー */
+.frame-comparison-wrapper {
+    margin: 80px 0;
+}
+
+.frame-role {
+    padding: 45px 40px;
+    margin-bottom: 40px;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.frame-role:last-child {
+    margin-bottom: 0;
+}
+
+/* フレーム設定者（支配側）のスタイル */
+.frame-setter {
+    background: linear-gradient(135deg, rgba(80, 150, 220, 0.15) 0%, rgba(50, 120, 200, 0.1) 100%);
+    border: 2px solid rgba(80, 150, 220, 0.3);
+    border-left: 5px solid #2b3e50;
+}
+
+.sec-light-1 .frame-setter,
+.sec-light-2 .frame-setter,
+.sec-light-3 .frame-setter {
+    background: linear-gradient(135deg, rgba(60, 120, 180, 0.12) 0%, rgba(40, 100, 160, 0.08) 100%);
+    border: 2px solid rgba(60, 120, 180, 0.25);
+    border-left: 5px solid #2b3e50;
+}
+
+/* フレーム充填者（従属側）のスタイル */
+.frame-filler {
+    background: linear-gradient(135deg, rgba(150, 150, 150, 0.12) 0%, rgba(120, 120, 120, 0.08) 100%);
+    border: 2px solid rgba(150, 150, 150, 0.25);
+    border-left: 5px solid #888;
+    opacity: 0.85;
+}
+
+.sec-light-1 .frame-filler,
+.sec-light-2 .frame-filler,
+.sec-light-3 .frame-filler {
+    background: linear-gradient(135deg, rgba(120, 120, 120, 0.1) 0%, rgba(100, 100, 100, 0.06) 100%);
+    border: 2px solid rgba(120, 120, 120, 0.2);
+    border-left: 5px solid #666;
+}
+
+/* 役割ラベル */
+.frame-label {
+    font-size: clamp(17px, 4.5vw, 22px);
+    font-weight: 700;
+    margin-bottom: 25px;
+    letter-spacing: 0.06em;
+    display: block;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.frame-setter .frame-label {
+    color: #f4f4f4;
+}
+
+.sec-light-1 .frame-setter .frame-label,
+.sec-light-2 .frame-setter .frame-label,
+.sec-light-3 .frame-setter .frame-label {
+    color: #2b3e50;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.frame-filler .frame-label {
+    color: #e0e0e0;
+}
+
+.sec-light-1 .frame-filler .frame-label,
+.sec-light-2 .frame-filler .frame-label,
+.sec-light-3 .frame-filler .frame-label {
+    color: #555;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+/* 役割説明文 */
+.frame-description {
+    font-size: clamp(15px, 4vw, 18px);
+    line-height: 2.0;
+    margin-bottom: 0;
+}
+
+
+
+/* ========================================
+   フォームスタイル（白背景対応版）
+======================================== */
+.mirai-form {
+    margin-top: 60px;
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 30px;
+}
+
+/* ラベルスタイル */
+.light-mode-form .form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: clamp(14px, 3.5vw, 15px);
+    color: #333; /* 濃いグレーで視認性確保 */
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.required {
+    color: #c83232; /* 必須マークの赤 */
+    margin-left: 4px;
+}
+
+/* 入力フィールドスタイル（白背景用） */
+.light-mode-form .form-group input,
+.light-mode-form .form-group textarea {
+    width: 100%;
+    padding: 16px;
+    background: #fcfcfc; /* わずかにオフホワイト */
+    border: 1px solid #d0d0d0; /* 境界線を明確に */
+    border-radius: 4px;
+    color: #1a1a1a; /* 入力文字は黒 */
+    font-size: 16px; /* スマホでズームしないサイズ */
+    font-family: 'Noto Sans JP', sans-serif;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.light-mode-form .form-group input::placeholder,
+.light-mode-form .form-group textarea::placeholder {
+    color: #999; /* プレースホルダー色 */
+}
+
+.light-mode-form .form-group input:focus,
+.light-mode-form .form-group textarea:focus {
+    outline: none;
+    border-color: #555; /* フォーカス時に濃く */
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.05); /* フォーカスリング */
+}
+
+.light-mode-form .form-group textarea {
+    resize: vertical;
+    min-height: 150px;
+    line-height: 1.8;
+}
+
+/* 送信ボタン（白背景用） */
+.light-mode-form .submit-btn {
+    width: 100%;
+    padding: 20px;
+    background: #1a1a1a; /* 黒ボタンで引き締め */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    letter-spacing: 0.1em;
+    margin-top: 20px;
+}
+
+.light-mode-form .submit-btn:hover {
+    background: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.light-mode-form .submit-btn:disabled {
+    background: #999;
+    color: #e6e6e6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.light-mode-form .form-note {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #666; /* 注意書きはグレー */
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* ローディングスピナー（白背景用） */
+.btn-loader {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top: 2px solid #fff; /* 白いスピナー */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ========================================
+   送信完了メッセージ（白背景対応版）
+======================================== */
+#form-container {
+    transition: opacity 0.5s ease;
+}
+
+.success-message.light-mode-message {
+    text-align: center;
+    padding: 80px 30px;
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-top: 60px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.light-mode-message .success-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 30px;
+    color: #1a1a1a; /* アイコンは黒 */
+}
+
+.light-mode-message h3 {
+    font-size: clamp(20px, 5vw, 24px);
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #1a1a1a; /* 見出しは黒 */
+}
+
+.light-mode-message p {
+    font-size: clamp(15px, 4vw, 18px);
+    color: #444; /* 本文は濃いグレー */
+    line-height: 2.2;
+    margin-bottom: 20px;
+}
+
+
+
+
+
+/* モバイル最適化 */
+@media (max-width: 768px) {
+    .comparison-item {
+        padding: 30px 25px;
+        margin-bottom: 25px;
+    }
+    
+    .frame-role {
+        padding: 35px 30px;
+        margin-bottom: 30px;
+    }
+    
+    .comparison-label,
+    .frame-label {
+        margin-bottom: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .comparison-item {
+        padding: 25px 20px;
+        margin-bottom: 20px;
+    }
+    
+    .frame-role {
+        padding: 30px 25px;
+        margin-bottom: 25px;
+    }
+    
+    .comparison-label,
+    .frame-label {
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+    }
+}
+
+
+/* ===== 動画フレーム（9:16 縦型）===== */
+.sec-video {
+    /* background: #fff; */
+    text-align: center;
+    padding: 20px 10px; /* 上下余白を少し広めに */
+    max-width: 450px;   /* 縦長なので横幅を絞ると綺麗に見えます */
+    margin: 0 auto;
+}
+
+.video-container {
+    max-width: 100%;    /* 親要素に合わせる */
+    width: 100%;
+    margin: 0 auto;
+}
+
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    /* 9:16 の計算式: (16 ÷ 9) × 100 = 177.77% */
+    padding-bottom: 177.77%; 
+    height: 0;
+    overflow: hidden;
+    background: #1a1a1a;
+    border-radius: 12px; /* スマホ画面らしく角丸にするのがおすすめ */
+}
+
+.video-wrapper iframe,
+.video-wrapper video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: cover; /* 映像が枠にフィットするように */
+}
+
+.video-placeholder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #666;
+    font-size: 14px;
+    text-align: center;
+    padding: 20px;
+    width: 80%;
+}
+
+/* ===== 動画フレーム強化 ===== */
+.video-wrapper{
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 14px;
+  overflow: hidden; /* 角丸を動画にも効かせる */
+  box-shadow: 0 18px 60px rgba(0,0,0,0.55);
+  background: #0b0b0b; /* 黒を締める */
+}
+
+/* iOSで角丸が効きにくい時の保険 */
+.video-wrapper iframe,
+.video-wrapper video{
+  border-radius: 14px;
+}
+
+
+
+
