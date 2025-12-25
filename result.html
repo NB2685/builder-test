@@ -327,11 +327,11 @@
     font-size: 1.2em;
 }
 
-.category-card.type-A h3::before { content: '🏗️'; background: none; }
-.category-card.type-B h3::before { content: '🌿'; background: none; }
-.category-card.type-C h3::before { content: '🔨'; background: none; }
-.category-card.type-D h3::before { content: '🌐'; background: none; }
-.category-card.type-E h3::before { content: '🏛️'; background: none; }
+.category-card.type-A h3::before { content: ''; background: none; }
+.category-card.type-B h3::before { content: ''; background: none; }
+.category-card.type-C h3::before { content: ''; background: none; }
+.category-card.type-D h3::before { content: ''; background: none; }
+.category-card.type-E h3::before { content: ''; background: none; }
 
 .category-card p {
     color: #555;
@@ -488,21 +488,7 @@
     <!-- カテゴリーカードは JavaScript で動的にクラスを追加 -->
     <div class="category-card type-A" id="category-card-A">
         <h3>
-        <svg class="builder-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M 30 70 L 30 40 L 45 30 L 45 60" fill="none" stroke="#1B5E9E" stroke-width="4"/>
-                            <circle cx="30" cy="35" r="5" fill="#1B5E9E"/>
-                            <path d="M 55 50 L 70 40 L 85 50" fill="none" stroke="#FFD700" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        Structure Builder<br class="sp-only"> - 構造防衛・都市防災</h3>
-        <p><strong>役割：</strong>耐震・耐風・耐水の命の防壁構築</p>
-        <p><strong>主戦場：</strong>災害多発地域、山・水際</p>
-        <p><strong>協働AI：</strong>シミュレーションAI（揺れ／流れ／劣化予測）</p>
-        <p><strong>使命：</strong>人を「死なせない」</p>
-    </div>
-
-    <div class="category-card type-B" id="category-card-B">
-        <h3>
-        <svg class="builder-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="160" height="160" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path id="roof" d="M32 12 L12 32 H20 V52 H44 V32 H52 L32 12 Z" fill="#1B5E9E" stroke="#0A3A66" stroke-width="2">
     <animateTransform 
       attributeName="transform" 
@@ -516,16 +502,16 @@
   <rect x="22" y="44" width="6" height="8" fill="#0A3A66" />
   <rect x="36" y="44" width="6" height="8" fill="#0A3A66" />
 </svg>
-Habitat Builder<br class="sp-only"> - 生態回復・水循環</h3>
-        <p><strong>役割：</strong>水・土壌・植生の生命基盤設計</p>
-        <p><strong>主戦場：</strong>放棄地、荒廃地、山林、海辺</p>
-        <p><strong>協働AI：</strong>環境センシングAI（気温・水質・微生物）</p>
-        <p><strong>使命：</strong>地球を「呼吸させる」</p>
+                        Structure Builder<br class="sp-only"> - 構造防衛・都市防災</h3>
+        <p><strong>役割：</strong>耐震・耐風・耐水の命の防壁構築</p>
+        <p><strong>主戦場：</strong>災害多発地域、山・水際</p>
+        <p><strong>協働AI：</strong>シミュレーションAI（揺れ／流れ／劣化予測）</p>
+        <p><strong>使命：</strong>人を「死なせない」</p>
     </div>
 
-    <div class="category-card type-C" id="category-card-C">
+    <div class="category-card type-B" id="category-card-B">
         <h3>
-        <svg class="builder-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="160" height="160" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="32" cy="32" r="28" stroke="#27AE60" stroke-width="3" fill="#D4EAC7" />
       <path d="M24 40 C26 45, 38 45, 40 40" stroke="#1B5E9E" stroke-width="3" fill="none"
         stroke-dasharray="40" stroke-dashoffset="0">
@@ -536,6 +522,29 @@ Habitat Builder<br class="sp-only"> - 生態回復・水循環</h3>
         <animate attributeName="stroke-dashoffset" values="40;0;40" dur="4s" begin="2s" repeatCount="indefinite" />
       </path>
     </svg>
+Habitat Builder<br class="sp-only"> - 生態回復・水循環</h3>
+        <p><strong>役割：</strong>水・土壌・植生の生命基盤設計</p>
+        <p><strong>主戦場：</strong>放棄地、荒廃地、山林、海辺</p>
+        <p><strong>協働AI：</strong>環境センシングAI（気温・水質・微生物）</p>
+        <p><strong>使命：</strong>地球を「呼吸させる」</p>
+    </div>
+
+    <div class="category-card type-C" id="category-card-C">
+        <h3>
+<svg width="160" height="160" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 本体の枠 -->
+  <rect x="14" y="20" width="36" height="24" rx="4" ry="4" fill="#E67E22" stroke="#9C5C00" stroke-width="2" />
+  
+  <!-- 上のラインがカットされるアニメーション -->
+  <line x1="14" y1="28" x2="50" y2="28" stroke="#9C5C00" stroke-width="2">
+    <animate attributeName="x2" values="50;14;50" dur="3s" repeatCount="indefinite" />
+  </line>
+
+  <!-- 中央の円が膨らむアニメーション -->
+  <circle cx="32" cy="42" r="6" fill="#C45B00">
+    <animate attributeName="r" values="6;8;6" dur="3s" repeatCount="indefinite" />
+  </circle>
+</svg>
     Product Builder<br class="sp-only"> - 道具・家財</h3>
         <p><strong>役割：</strong>毎日触れる生活クオリティの源をつくる</p>
         <p><strong>主戦場：</strong>工房、地場産業、輸出市場</p>
@@ -545,14 +554,25 @@ Habitat Builder<br class="sp-only"> - 生態回復・水循環</h3>
 
     <div class="category-card type-D" id="category-card-D">
         <h3>
-        <svg class="builder-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect x="14" y="20" width="36" height="24" rx="4" ry="4" fill="#E67E22" stroke="#9C5C00" stroke-width="2" />
-  <line x1="14" y1="28" x2="50" y2="28" stroke="#9C5C00" stroke-width="2">
-    <animate attributeName="x2" values="50;14;50" dur="3s" repeatCount="indefinite" />
-  </line>
-  <circle cx="32" cy="42" r="6" fill="#C45B00">
-    <animate attributeName="r" values="6;8;6" dur="3s" repeatCount="indefinite" />
-  </circle>
+<svg width="160" height="160" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 基本の矩形 -->
+  <rect x="16" y="14" width="32" height="36" rx="4" ry="4" fill="#3498DB" stroke="#0B3D91" stroke-width="2" />
+  
+  <!-- 矢印形状に動きのアニメーション -->
+  <path id="arrow" d="M26 30 L38 22 L38 42 L26 34 Z" fill="#E8F0F7">
+    <animateTransform 
+      attributeName="transform" 
+      attributeType="XML" 
+      type="translate" 
+      values="0 0; 4 0; 0 0;" 
+      dur="3s"
+      repeatCount="indefinite" />
+  </path>
+  
+  <!-- 下の長方形の広がりを表現 -->
+  <rect x="22" y="38" width="20" height="6" fill="#0A3A66">
+    <animate attributeName="width" values="20;24;20" dur="3s" repeatCount="indefinite" />
+  </rect>
 </svg>
 System Builder<br class="sp-only"> - 社会設計・物流</h3>
         <p><strong>役割：</strong>インフラ × 経済 × 法の運用システム構築</p>
@@ -563,19 +583,21 @@ System Builder<br class="sp-only"> - 社会設計・物流</h3>
 
     <div class="category-card type-E" id="category-card-E">
         <h3>
-            <svg class="builder-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect x="16" y="14" width="32" height="36" rx="4" ry="4" fill="#3498DB" stroke="#0B3D91" stroke-width="2" />
-  <path id="arrow" d="M26 30 L38 22 L38 42 L26 34 Z" fill="#E8F0F7">
+<svg width="160" height="160" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <polygon id="sanctuary" points="32,12 42,28 52,40 32,52 12,40 22,28" fill="#27AE60" stroke="#165A1C" stroke-width="2">
     <animateTransform 
       attributeName="transform" 
       attributeType="XML" 
-      type="translate" 
-      values="0 0; 4 0; 0 0;" 
-      dur="3s"
-      repeatCount="indefinite" />
-  </path>
-  <rect x="22" y="38" width="20" height="6" fill="#0A3A66">
-    <animate attributeName="width" values="20;24;20" dur="3s" repeatCount="indefinite" />
+      type="scale" 
+      begin="0s"
+      values="1;1.05;1" 
+      dur="4s" 
+      repeatCount="indefinite"
+      additive="sum"
+      />
+  </polygon>
+  <rect id="sanctuary-base" x="28" y="36" width="8" height="12" fill="#09400D">
+    <animate attributeName="fill-opacity" values="1;0.7;1" dur="4s" repeatCount="indefinite"/>
   </rect>
 </svg>
 Sanctuary Builder<br class="sp-only"> - 空間心理・場の治癒</h3>
