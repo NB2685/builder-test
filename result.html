@@ -269,7 +269,7 @@
 
 /* トップバッジ */
 .category-card.top-type::before {
-    content: '★ あなたのトップタイプ';
+    content: '';
     position: absolute;
     top: 15px;
     right: 15px;
@@ -293,7 +293,7 @@
 
 /* セカンドバッジ */
 .category-card.second-type::before {
-    content: '2nd';
+    content: '';
     position: absolute;
     top: 15px;
     right: 15px;
@@ -366,6 +366,10 @@
     /* ========================================
        建築者アイコン（SVG）スタイル
        ======================================== */
+       svg {
+        margin: 0 auto;
+        text-align: center;
+       }
 
     .builder-icon {
         width: 48px;
@@ -487,7 +491,12 @@
 
     <!-- カテゴリーカードは JavaScript で動的にクラスを追加 -->
     <div class="category-card type-A" id="category-card-A">
-        <h3>
+        <h3>Structure Builder<br class="sp-only"> - 構造防衛・都市防災</h3>
+        <p><strong>役割：</strong>耐震・耐風・耐水の命の防壁構築</p>
+        <p><strong>主戦場：</strong>災害多発地域、山・水際</p>
+        <p><strong>協働AI：</strong>シミュレーションAI（揺れ／流れ／劣化予測）</p>
+        <p><strong>使命：</strong>人を「死なせない」</p>
+
 <svg width="160" height="160" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path id="roof" d="M32 12 L12 32 H20 V52 H44 V32 H52 L32 12 Z" fill="#1B5E9E" stroke="#0A3A66" stroke-width="2">
     <animateTransform 
@@ -502,15 +511,16 @@
   <rect x="22" y="44" width="6" height="8" fill="#0A3A66" />
   <rect x="36" y="44" width="6" height="8" fill="#0A3A66" />
 </svg>
-                        Structure Builder<br class="sp-only"> - 構造防衛・都市防災</h3>
-        <p><strong>役割：</strong>耐震・耐風・耐水の命の防壁構築</p>
-        <p><strong>主戦場：</strong>災害多発地域、山・水際</p>
-        <p><strong>協働AI：</strong>シミュレーションAI（揺れ／流れ／劣化予測）</p>
-        <p><strong>使命：</strong>人を「死なせない」</p>
+
     </div>
 
     <div class="category-card type-B" id="category-card-B">
-        <h3>
+        <h3>Habitat Builder<br class="sp-only"> - 生態回復・水循環</h3>
+        <p><strong>役割：</strong>水・土壌・植生の生命基盤設計</p>
+        <p><strong>主戦場：</strong>放棄地、荒廃地、山林、海辺</p>
+        <p><strong>協働AI：</strong>環境センシングAI（気温・水質・微生物）</p>
+        <p><strong>使命：</strong>地球を「呼吸させる」</p>
+
     <svg width="160" height="160" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="32" cy="32" r="28" stroke="#27AE60" stroke-width="3" fill="#D4EAC7" />
       <path d="M24 40 C26 45, 38 45, 40 40" stroke="#1B5E9E" stroke-width="3" fill="none"
@@ -522,15 +532,16 @@
         <animate attributeName="stroke-dashoffset" values="40;0;40" dur="4s" begin="2s" repeatCount="indefinite" />
       </path>
     </svg>
-Habitat Builder<br class="sp-only"> - 生態回復・水循環</h3>
-        <p><strong>役割：</strong>水・土壌・植生の生命基盤設計</p>
-        <p><strong>主戦場：</strong>放棄地、荒廃地、山林、海辺</p>
-        <p><strong>協働AI：</strong>環境センシングAI（気温・水質・微生物）</p>
-        <p><strong>使命：</strong>地球を「呼吸させる」</p>
+
     </div>
 
     <div class="category-card type-C" id="category-card-C">
-        <h3>
+        <h3>Product Builder<br class="sp-only"> - 道具・家財</h3>
+        <p><strong>役割：</strong>毎日触れる生活クオリティの源をつくる</p>
+        <p><strong>主戦場：</strong>工房、地場産業、輸出市場</p>
+        <p><strong>協働AI：</strong>製造最適化AI（カット、3D、強度設計）</p>
+        <p><strong>使命：</strong>暮らしを「豊かにする」</p>
+
 <svg width="160" height="160" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- 本体の枠 -->
   <rect x="14" y="20" width="36" height="24" rx="4" ry="4" fill="#E67E22" stroke="#9C5C00" stroke-width="2" />
@@ -545,15 +556,16 @@ Habitat Builder<br class="sp-only"> - 生態回復・水循環</h3>
     <animate attributeName="r" values="6;8;6" dur="3s" repeatCount="indefinite" />
   </circle>
 </svg>
-    Product Builder<br class="sp-only"> - 道具・家財</h3>
-        <p><strong>役割：</strong>毎日触れる生活クオリティの源をつくる</p>
-        <p><strong>主戦場：</strong>工房、地場産業、輸出市場</p>
-        <p><strong>協働AI：</strong>製造最適化AI（カット、3D、強度設計）</p>
-        <p><strong>使命：</strong>暮らしを「豊かにする」</p>
+
     </div>
 
     <div class="category-card type-D" id="category-card-D">
-        <h3>
+        <h3>System Builder<br class="sp-only"> - 社会設計・物流</h3>
+        <p><strong>役割：</strong>インフラ × 経済 × 法の運用システム構築</p>
+        <p><strong>主戦場：</strong>都市、国境、コミュニティ組織</p>
+        <p><strong>協働AI：</strong>データ統合AI（交通／配電／市場）</p>
+        <p><strong>使命：</strong>文明を「回す」</p>
+
 <svg width="160" height="160" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- 基本の矩形 -->
   <rect x="16" y="14" width="32" height="36" rx="4" ry="4" fill="#3498DB" stroke="#0B3D91" stroke-width="2" />
@@ -574,15 +586,16 @@ Habitat Builder<br class="sp-only"> - 生態回復・水循環</h3>
     <animate attributeName="width" values="20;24;20" dur="3s" repeatCount="indefinite" />
   </rect>
 </svg>
-System Builder<br class="sp-only"> - 社会設計・物流</h3>
-        <p><strong>役割：</strong>インフラ × 経済 × 法の運用システム構築</p>
-        <p><strong>主戦場：</strong>都市、国境、コミュニティ組織</p>
-        <p><strong>協働AI：</strong>データ統合AI（交通／配電／市場）</p>
-        <p><strong>使命：</strong>文明を「回す」</p>
+
     </div>
 
     <div class="category-card type-E" id="category-card-E">
-        <h3>
+        <h3>Sanctuary Builder<br class="sp-only"> - 空間心理・場の治癒</h3>
+        <p><strong>役割：</strong>共同体の心の安全基地を創る</p>
+        <p><strong>主戦場：</strong>住宅、教育、医療、寺院</p>
+        <p><strong>協働AI：</strong>光・音・心理フィード最適化AI</p>
+        <p><strong>使命：</strong>人を「壊さない」</p>
+
 <svg width="160" height="160" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
   <polygon id="sanctuary" points="32,12 42,28 52,40 32,52 12,40 22,28" fill="#27AE60" stroke="#165A1C" stroke-width="2">
     <animateTransform 
@@ -600,11 +613,7 @@ System Builder<br class="sp-only"> - 社会設計・物流</h3>
     <animate attributeName="fill-opacity" values="1;0.7;1" dur="4s" repeatCount="indefinite"/>
   </rect>
 </svg>
-Sanctuary Builder<br class="sp-only"> - 空間心理・場の治癒</h3>
-        <p><strong>役割：</strong>共同体の心の安全基地を創る</p>
-        <p><strong>主戦場：</strong>住宅、教育、医療、寺院</p>
-        <p><strong>協働AI：</strong>光・音・心理フィード最適化AI</p>
-        <p><strong>使命：</strong>人を「壊さない」</p>
+
     </div>
 </div>
 
