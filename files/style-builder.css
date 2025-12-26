@@ -428,6 +428,27 @@ box-shadow: 0 0 0 3px rgba(232, 232, 232, 0.1);
 
 }
 
+.payment-amount-container {
+    background-color: #f8f9fa;  /* 薄いグレー背景 */
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+    /*text-align: center;*/
+}
+
+.amount-label {
+    font-size: 1em;             /* 大きな文字で強調 */
+    font-weight: bold;
+    color: #2b3e50;             /* ダークネイビー色 */
+}
+
+.amount-value {
+    font-size: 2em;             /* 大きな文字で強調 */
+    font-weight: bold;
+    color: #2b3e50;             /* ダークネイビー色 */
+}
+
 
 /* ========================================
    リセット & ベース設定
